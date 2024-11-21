@@ -1,4 +1,4 @@
-package com.mtc.login
+package com.mtc.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,11 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LoginRoute(
+fun HomeRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateToSignUp: () -> Unit,
+    navigateAddMatching: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -22,9 +21,9 @@ fun LoginRoute(
     ) {
         Text(
             modifier = Modifier.clickable {
-                navigateToSignUp()
+                navigateAddMatching()
             },
-            text = "로그인",
+            text = "home",
         )
     }
 }

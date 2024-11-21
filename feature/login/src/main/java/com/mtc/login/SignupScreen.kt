@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LoginRoute(
+fun SignupRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
-    navigateToSignUp: () -> Unit,
+    navigateLogin: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -22,9 +22,8 @@ fun LoginRoute(
     ) {
         Text(
             modifier = Modifier.clickable {
-                navigateToSignUp()
+                navigateToHome()
             },
-            text = "로그인",
-        )
+            text = "사인업")
     }
 }
