@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.feature.signup)
+    implementation(projects.feature.login)
     implementation(projects.feature.home)
     implementation(projects.feature.addmatching)
 }

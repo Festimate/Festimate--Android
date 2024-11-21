@@ -1,16 +1,17 @@
-package com.mtc.signup.navigation
+package com.mtc.login.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.mtc.login.LoginRoute
 import com.mtc.navigation.Route
-import com.mtc.signup.SignupRoute
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateSignup() {
-    navigate(Signup)
+fun NavController.navigateLogin(navOptions: NavOptions) {
+    navigate(Login, navOptions)
 }
 
 fun NavGraphBuilder.signupNavGraph(
@@ -18,9 +19,13 @@ fun NavGraphBuilder.signupNavGraph(
     modifier: Modifier = Modifier,
 ) {
     composable<Signup> {
-        SignupRoute()
+        LoginRoute()
     }
 }
 
 @Serializable
+data object Login : Route
+
+@Serializable
 data object Signup : Route
+

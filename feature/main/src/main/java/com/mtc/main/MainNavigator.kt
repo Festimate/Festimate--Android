@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mtc.navigation.Route
-import com.mtc.signup.navigation.Signup
+import com.mtc.login.navigation.Signup
 
 internal class MainNavigator(
     val navController: NavHostController,

@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mtc.designsystem.theme.FestimateTheme
-import com.mtc.signup.navigation.signupNavGraph
+import com.mtc.login.navigation.signupNavGraph
 
 @Composable
 internal fun MainScreen(
