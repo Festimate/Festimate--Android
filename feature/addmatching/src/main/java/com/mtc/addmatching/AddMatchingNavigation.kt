@@ -1,26 +1,29 @@
-package com.mtc.signup.navigation
+package com.mtc.addmatching
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.mtc.navigation.Route
-import com.mtc.signup.SignupRoute
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateSignup() {
-    navigate(Signup)
+fun NavController.navigateAddMatching(navOptions: NavOptions) {
+    navigate(AddMatching, navOptions)
 }
 
-fun NavGraphBuilder.signupNavGraph(
+fun NavGraphBuilder.addMatchingGraph(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    composable<Signup> {
-        SignupRoute()
+    composable<AddMatching> {
+        AddMatchingRoute(
+            padding = padding,
+            modifier = modifier,
+        )
     }
 }
 
 @Serializable
-data object Signup : Route
+data object AddMatching : Route

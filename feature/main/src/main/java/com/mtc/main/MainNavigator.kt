@@ -7,8 +7,11 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.mtc.addmatching.AddMatching
+import com.mtc.home.Home
+import com.mtc.login.navigation.Login
+import com.mtc.login.navigation.Signup
 import com.mtc.navigation.Route
-import com.mtc.signup.navigation.Signup
 
 internal class MainNavigator(
     val navController: NavHostController,
@@ -17,14 +20,39 @@ internal class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = Signup
+    val startDestination = Login
 
-    /*
-    fun navigateUpIfNotHome() {
-        if (!isSameCurrentDestination<Home>()) {
-            navigateUp()
+    fun navigateToLogin() {
+        navController.navigate(Login) {
+            popUpTo(navController.graph.id) {
+                inclusive = true
+            }
         }
-    }*/
+    }
+
+    fun navigateToSignup() {
+        navController.navigate(Signup) {
+            popUpTo(navController.graph.id) {
+                inclusive = true
+            }
+        }
+    }
+
+    fun navigateToHome() {
+        navController.navigate(Home) {
+            popUpTo(navController.graph.id) {
+                inclusive = true
+            }
+        }
+    }
+
+    fun navigateToAddMatching() {
+        navController.navigate(AddMatching) {
+            popUpTo(navController.graph.id) {
+                inclusive = true
+            }
+        }
+    }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean {
         return navController.currentDestination?.hasRoute<T>() == true

@@ -8,8 +8,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.mtc.addmatching.addMatchingGraph
 import com.mtc.designsystem.theme.FestimateTheme
-import com.mtc.signup.navigation.signupNavGraph
+import com.mtc.home.homeNavGraph
+import com.mtc.login.navigation.loginNavGraph
 
 @Composable
 internal fun MainScreen(
@@ -28,7 +30,17 @@ internal fun MainScreen(
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
             ) {
-                signupNavGraph(
+                loginNavGraph(
+                    padding = innerPadding,
+                    navigateToHome = navigator::navigateToHome,
+                    navigateToSignUp = navigator::navigateToSignup,
+                    navigateToLogin = navigator::navigateToLogin,
+                )
+                homeNavGraph(
+                    padding = innerPadding,
+                    navigateToAddMatching = navigator::navigateToAddMatching,
+                )
+                addMatchingGraph(
                     padding = innerPadding,
                 )
             }

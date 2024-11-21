@@ -3,5 +3,5 @@ plugins {
 }
 
 android {
-    namespace = "com.mtc.signup"
+    namespace = "com.mtc.login"
 }
