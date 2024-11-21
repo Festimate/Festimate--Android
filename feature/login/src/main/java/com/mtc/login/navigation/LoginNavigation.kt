@@ -46,4 +46,3 @@ data object Login : Route
 
 @Serializable
 data object Signup : Route
-

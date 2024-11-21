@@ -24,6 +24,7 @@ fun SignupRoute(
             modifier = Modifier.clickable {
                 navigateToHome()
             },
-            text = "사인업")
+            text = "사인업",
+        )
     }
 }
