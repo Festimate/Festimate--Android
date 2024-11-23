@@ -17,14 +17,14 @@ fun LoginRoute(
     navigateToSignUp: () -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            modifier = Modifier.clickable {
+            modifier = modifier.clickable {
                 navigateToSignUp()
             },
-            text = "로그인",
+            text = "login",
         )
     }
 }
