@@ -25,7 +25,7 @@ import com.mtc.designsystem.theme.FestimateTheme
 fun MatchingListPager(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    //state 바꿔야됨
+    // state 바꿔야됨
     homeState: HomeState,
     contentPadding: Dp = 50.dp,
     pageSpacing: Dp = 16.dp,
@@ -78,6 +78,3 @@ fun MatchingListPager(
         }
     }
 }
-
-
-

@@ -23,7 +23,7 @@ import com.mtc.designsystem.theme.White
 import com.mtc.ui.extension.customClickable
 
 @Composable
-fun SignupTopBar(
+fun FestimateTopAppBar(
     modifier: Modifier = Modifier,
     onBackButtonClick: () -> Unit,
     signupPageNumber: String,
@@ -73,5 +73,4 @@ fun SignupTopBar(
             textAlign = TextAlign.Center,
         )
     }
-
 }
