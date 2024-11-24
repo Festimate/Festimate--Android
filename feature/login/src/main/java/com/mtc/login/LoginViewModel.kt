@@ -1,16 +1,30 @@
 package com.mtc.login
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.mtc.datastore.datastore.SecurityDataStore
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : BaseViewModel<LoginState, LoginSideEffect>(LoginState()) {
+class LoginViewModel @Inject constructor(
+    private val dataStore: SecurityDataStore,
+) : BaseViewModel<LoginState, LoginSideEffect>(LoginState()) {
 
-    val existAccount = false
+    //자동로그인 설정
+//    init {
+//        setAccountExist()
+//    }
+//    fun setAccountExist() {
+//        viewModelScope.launch {
+//            dataStore.setExistAccount(false)
+//        }
+//    }
 
     fun getAccountExist() {
         postSideEffect(
@@ -18,14 +32,19 @@ class LoginViewModel @Inject constructor() : BaseViewModel<LoginState, LoginSide
         )
         viewModelScope.launch {
             delay(1550L)
-            runCatching { existAccount }
+            runCatching { dataStore.flowExistAccount().first() }
                 .onSuccess {
-                    intent {
-                        copy(existAccount = it)
+                    Log.d("asdasd", it.toString())
+                    if (it) {
+                        intent {
+                            copy(existAccount = it)
+                        }
+                        postSideEffect(LoginSideEffect.Success)
+                    } else {
+                        postSideEffect(LoginSideEffect.Failure)
                     }
-                    postSideEffect(LoginSideEffect.Success)
                 }.onFailure {
-                    postSideEffect(LoginSideEffect.Failure)
+                    Timber.tag("ExistAccount").d(it)
                 }
 
         }

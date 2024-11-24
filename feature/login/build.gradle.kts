@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.mtc.login"
 }
+
+dependencies {
+    implementation(projects.core.datastore)
+}

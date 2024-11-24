@@ -34,7 +34,6 @@ fun LoginRoute(
             getAccountExist()
         }
     }
-
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
@@ -45,7 +44,6 @@ fun LoginRoute(
             }
         }
     }
-
     LoginScreen()
 }
 
