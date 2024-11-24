@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mtc.designsystem.theme.White
 import com.mtc.ui.extension.customClickable
 
 @Composable
@@ -24,7 +25,7 @@ fun FestimateBasicButton(
     shape: Shape = RectangleShape,
     text: String = "",
     textStyle: TextStyle = TextStyle.Default,
-    textColor: Color = Color.Unspecified,
+    textColor: Color = White,
     clickable: Boolean = true,
     backgroundColor: Color = Color.Unspecified,
     rippleColor: Color = Color.Unspecified,
@@ -48,7 +49,7 @@ fun FestimateBasicButton(
             .customClickable(
                 runIf = clickable,
                 rippleColor = rippleColor,
-                rippleEnabled = true,
+                rippleEnabled = false,
                 onClick = onClick,
             )
             .padding(padding),

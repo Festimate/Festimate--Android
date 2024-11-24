@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,6 @@ import com.mtc.ui.extension.customClickable
 @Composable
 fun FestimateTopAppBar(
     modifier: Modifier = Modifier,
-    onBackButtonClick: () -> Unit,
     signupPageNumber: String,
     signupPageContent: String,
 ) {
@@ -34,17 +34,6 @@ fun FestimateTopAppBar(
             .fillMaxWidth()
             .padding(top = 52.dp, bottom = 5.dp),
     ) {
-        Image(
-            modifier = modifier
-                .align(Alignment.Start)
-                .padding(start = 16.dp)
-                .customClickable(
-                    rippleEnabled = false,
-                    onClick = onBackButtonClick,
-                ),
-            painter = painterResource(id = R.drawable.ic_back),
-            contentDescription = "back",
-        )
         Box(
             modifier = modifier
                 .padding(bottom = 9.dp)
