@@ -18,7 +18,7 @@ data class SignUpState(
     val heightScreenResult: Boolean = false,
     val appearanceScreenResult: Boolean = false,
 
-    ) : UiState
+) : UiState
 
 sealed interface SignUpSideEffect : SideEffect {
     data object Empty : SignUpSideEffect

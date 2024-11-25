@@ -87,7 +87,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
             SignUpSideEffect.Success,
         )
     }
-    
+
     private fun checkNicknameValidate(nickname: String): NicknameValidateResult {
         return when {
             nickname.isEmpty() || nickname.length == 1 -> NicknameValidateResult.Empty

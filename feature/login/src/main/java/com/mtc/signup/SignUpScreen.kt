@@ -93,7 +93,9 @@ fun SignUpScreen(
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
                             }
                         }
-                    } else null,
+                    } else {
+                        null
+                    },
                 ),
             painter = painterResource(id = R.drawable.ic_back),
             contentDescription = "back",
@@ -150,7 +152,9 @@ fun SignUpScreen(
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
-                } else viewModel.signUp()
+                } else {
+                    viewModel.signUp()
+                }
             },
             padding = PaddingValues(horizontal = 156.dp, vertical = 17.dp),
         )

@@ -30,8 +30,14 @@ fun AppearanceScreen(
     uiState: SignUpState,
 ) {
     val appearance = listOf(
-        "고양이상", "강아지상", "공룡상", "여우상",
-        "곰상", "토끼상", "아랍상", "두부상",
+        "고양이상",
+        "강아지상",
+        "공룡상",
+        "여우상",
+        "곰상",
+        "토끼상",
+        "아랍상",
+        "두부상",
     )
 
     Column(

@@ -15,7 +15,7 @@ class LoginViewModel @Inject constructor(
     private val dataStore: SecurityDataStore,
 ) : BaseViewModel<LoginState, LoginSideEffect>(LoginState()) {
 
-    //자동로그인 설정
+    // 자동로그인 설정
 //    init {
 //        setAccountExist()
 //    }
@@ -44,7 +44,6 @@ class LoginViewModel @Inject constructor(
                 }.onFailure {
                     Timber.tag("ExistAccount").d(it)
                 }
-
         }
     }
 }

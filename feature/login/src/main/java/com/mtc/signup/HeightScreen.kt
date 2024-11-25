@@ -111,7 +111,6 @@ fun HeightScreen(
                     padding = PaddingValues(horizontal = 78.dp, vertical = 15.dp),
                 )
             }
-
         }
     }
 }

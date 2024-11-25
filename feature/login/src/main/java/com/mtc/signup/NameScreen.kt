@@ -156,7 +156,11 @@ fun NameScreen(
                 textStyle = FestimateTheme.typography.bodySemibold13,
                 clickable = uiState.nicknameValidateResult == NicknameValidateResult.CorrectInput,
                 backgroundColor = if (uiState.nicknameValidateResult == NicknameValidateResult.CorrectInput
-                ) MainCoral else Gray03,
+                ) {
+                    MainCoral
+                } else {
+                    Gray03
+                },
                 onClick = {
                     checkNicknameDuplicate()
                 },
@@ -228,13 +232,19 @@ fun NameScreen(
                 shape = RoundedCornerShape(12.dp),
                 text = "여자",
                 textColor =
-                if (uiState.selectedGender == SelectedGender.Female) White
-                else Gray04,
+                if (uiState.selectedGender == SelectedGender.Female) {
+                    White
+                } else {
+                    Gray04
+                },
                 textStyle = FestimateTheme.typography.bodySemibold15,
                 clickable = true,
                 backgroundColor =
-                if (uiState.selectedGender == SelectedGender.Female) MainCoral
-                else Gray01,
+                if (uiState.selectedGender == SelectedGender.Female) {
+                    MainCoral
+                } else {
+                    Gray01
+                },
                 onClick = {
                     updateGender(SelectedGender.Female)
                 },
@@ -246,13 +256,19 @@ fun NameScreen(
                 shape = RoundedCornerShape(12.dp),
                 text = "남자",
                 textColor =
-                if (uiState.selectedGender == SelectedGender.Male) White
-                else Gray04,
+                if (uiState.selectedGender == SelectedGender.Male) {
+                    White
+                } else {
+                    Gray04
+                },
                 textStyle = FestimateTheme.typography.bodySemibold15,
                 clickable = true,
                 backgroundColor =
-                if (uiState.selectedGender == SelectedGender.Male) MainCoral
-                else Gray01,
+                if (uiState.selectedGender == SelectedGender.Male) {
+                    MainCoral
+                } else {
+                    Gray01
+                },
                 onClick = {
                     updateGender(SelectedGender.Male)
                 },
