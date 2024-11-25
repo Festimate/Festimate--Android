@@ -32,7 +32,7 @@ fun FestimateTopAppBar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 52.dp, bottom = 5.dp),
+            .padding(top = 12.dp, bottom = 18.dp),
     ) {
         Box(
             modifier = modifier

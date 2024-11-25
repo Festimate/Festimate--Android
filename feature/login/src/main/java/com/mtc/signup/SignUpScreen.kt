@@ -1,14 +1,17 @@
 package com.mtc.signup
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -22,6 +25,7 @@ import com.mtc.designsystem.R
 import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray03
+import com.mtc.designsystem.theme.MainCoral
 import com.mtc.signup.SignUpPage.Companion.toSignupPager
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
@@ -37,6 +41,11 @@ fun SignUpRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(uiState) {
+        viewModel.apply {
+            nameScreenResultValidate()
+        }
+    }
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
@@ -64,11 +73,15 @@ fun SignUpScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
 
-    Column {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
+    ) {
         Image(
-            modifier = modifier
+            modifier = Modifier
                 .align(Alignment.Start)
-                .padding(start = 16.dp, top = 50.dp)
+                .padding(top = 50.dp)
+                .padding(horizontal = 16.dp)
                 .alpha(
                     if (pagerState.currentPage == 1 || pagerState.currentPage == 2) 1f else 0f,
                 )
@@ -86,14 +99,21 @@ fun SignUpScreen(
             contentDescription = "back",
         )
         HorizontalPager(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.weight(1f),
             state = pagerState,
-            userScrollEnabled = true,
+            userScrollEnabled = false,
+            verticalAlignment = Alignment.Top,
         ) { page ->
             when (page.toSignupPager()) {
                 SignUpPage.Error -> {}
                 SignUpPage.Name -> NameScreen(
                     uiState = uiState,
+                    updateName = viewModel::updateName,
+                    updateNickname = viewModel::updateNickName,
+                    checkNicknameDuplicate = viewModel::checkNickNameDuplicate,
+                    updateAge = viewModel::updateAge,
+                    updateGender = viewModel::updateGender,
+                    updateSchool = viewModel::updateSchool,
                 )
 
                 SignUpPage.Height -> HeightScreen(
@@ -106,21 +126,31 @@ fun SignUpScreen(
             }
         }
         FestimateBasicButton(
-            modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            Modifier
+                .padding(bottom = 18.dp)
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
             text = "다음",
             textStyle = FestimateTheme.typography.bodySemibold17,
-            clickable = true,
-            backgroundColor = Gray03,
+            clickable = when (pagerState.currentPage) {
+                0 -> uiState.nameScreenResult
+                1 -> uiState.heightScreenResult
+                2 -> uiState.appearanceScreenResult
+                else -> false
+            },
+            backgroundColor = when (pagerState.currentPage) {
+                0 -> if (uiState.nameScreenResult) MainCoral else Gray03
+                1 -> if (uiState.heightScreenResult) MainCoral else Gray03
+                2 -> if (uiState.appearanceScreenResult) MainCoral else Gray03
+                else -> Gray03
+            },
             onClick = {
                 if (pagerState.currentPage == 0 || pagerState.currentPage == 1) {
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
                 } else viewModel.signUp()
-
             },
             padding = PaddingValues(horizontal = 156.dp, vertical = 17.dp),
         )

@@ -1,6 +1,5 @@
 package com.mtc.login
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mtc.datastore.datastore.SecurityDataStore
 import com.mtc.ui.base.BaseViewModel
@@ -34,7 +33,6 @@ class LoginViewModel @Inject constructor(
             delay(1550L)
             runCatching { dataStore.flowExistAccount().first() }
                 .onSuccess {
-                    Log.d("asdasd", it.toString())
                     if (it) {
                         intent {
                             copy(existAccount = it)
