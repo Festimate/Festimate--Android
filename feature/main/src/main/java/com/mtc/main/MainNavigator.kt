@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mtc.addmatching.AddMatching
 import com.mtc.home.Home
 import com.mtc.login.navigation.Login
-import com.mtc.login.navigation.Signup
+import com.mtc.login.navigation.SignUp
 import com.mtc.navigation.Route
 
 internal class MainNavigator(
@@ -31,7 +31,7 @@ internal class MainNavigator(
     }
 
     fun navigateToSignup() {
-        navController.navigate(Signup) {
+        navController.navigate(SignUp) {
             popUpTo(navController.graph.id) {
                 inclusive = true
             }

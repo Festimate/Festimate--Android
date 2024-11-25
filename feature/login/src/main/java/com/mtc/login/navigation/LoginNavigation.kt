@@ -7,8 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.mtc.login.LoginRoute
-import com.mtc.login.SignupRoute
 import com.mtc.navigation.Route
+import com.mtc.signup.SignUpRoute
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateLogin(navOptions: NavOptions) {
@@ -31,12 +31,11 @@ fun NavGraphBuilder.loginNavGraph(
         )
     }
 
-    composable<Signup> {
-        SignupRoute(
+    composable<SignUp> {
+        SignUpRoute(
             padding = padding,
             modifier = modifier,
             navigateToHome = navigateToHome,
-            navigateLogin = navigateToLogin,
         )
     }
 }
@@ -45,4 +44,4 @@ fun NavGraphBuilder.loginNavGraph(
 data object Login : Route
 
 @Serializable
-data object Signup : Route
+data object SignUp : Route
