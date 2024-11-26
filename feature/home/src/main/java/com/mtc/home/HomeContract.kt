@@ -5,6 +5,8 @@ import com.mtc.ui.base.SideEffect
 import com.mtc.ui.base.UiState
 
 data class HomeState(
+    val nickname: String = "",
+    val school: String = "",
     val matchingStateResult: MatchingStateResult = MatchingStateResult.Empty,
     val matchingInfo: List<MatchingInfo> = emptyList(),
 ) : UiState

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 fun AddMatchingRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
+    navigateHome: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
