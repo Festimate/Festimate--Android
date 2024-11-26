@@ -29,7 +29,7 @@ import com.mtc.designsystem.theme.White
 import com.mtc.signup.Mbti.Companion.toMbti
 
 @Composable
-fun HeightScreen(
+fun SecondUserInfoScreen(
     modifier: Modifier = Modifier,
     uiState: SignUpState,
     updateHeight: (String) -> Unit,

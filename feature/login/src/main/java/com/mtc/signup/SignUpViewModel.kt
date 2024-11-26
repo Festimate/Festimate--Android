@@ -23,7 +23,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
             copy(
                 nickname = nickname,
                 nicknameValidateResult = checkNicknameValidate(nickname),
-                nameScreenResult = false,
+                firstUserInfoScreenResult = false,
             )
         }
     }
@@ -158,19 +158,19 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
         }
     }
 
-    fun nameScreenResultValidate() {
+    fun firstUserInfoScreenResultValidate() {
         if (uiState.value.username.isNotBlank() && uiState.value.nicknameValidateResult == NicknameValidateResult.Success &&
             uiState.value.age.isNotBlank() && uiState.value.selectedGender != SelectedGender.Empty && uiState.value.school.isNotBlank()
         ) {
             intent {
                 copy(
-                    nameScreenResult = true,
+                    firstUserInfoScreenResult = true,
                 )
             }
         }
     }
 
-    fun heightScreenResultValidate() {
+    fun secondUserInfoScreenResultValidate() {
         if (uiState.value.height.isNotBlank() &&
             uiState.value.m.toModel()?.isNotBlank() == true &&
             uiState.value.b.toModel()?.isNotBlank() == true &&
@@ -182,7 +182,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
                     mbti = uiState.value.run {
                         m.toModel() + b.toModel() + t.toModel() + i.toModel()
                     },
-                    heightScreenResult = true,
+                    secondUserInfoScreenResult = true,
                 )
             }
         } else intent {
@@ -190,7 +190,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
                 mbti = uiState.value.run {
                     m.toModel() + b.toModel() + t.toModel() + i.toModel()
                 },
-                heightScreenResult = false,
+                secondUserInfoScreenResult = false,
             )
         }
     }

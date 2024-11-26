@@ -25,7 +25,7 @@ import com.mtc.designsystem.theme.Gray01
 import com.mtc.designsystem.theme.Gray04
 
 @Composable
-fun AppearanceScreen(
+fun ThirdUserInfoScreen(
     modifier: Modifier = Modifier,
     uiState: SignUpState,
 ) {

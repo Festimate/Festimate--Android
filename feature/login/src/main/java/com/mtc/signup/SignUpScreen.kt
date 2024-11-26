@@ -43,8 +43,8 @@ fun SignUpRoute(
 
     LaunchedEffect(uiState) {
         viewModel.apply {
-            nameScreenResultValidate()
-            heightScreenResultValidate()
+            firstUserInfoScreenResultValidate()
+            secondUserInfoScreenResultValidate()
         }
     }
     LaunchedEffectWithLifecycle {
@@ -109,7 +109,7 @@ fun SignUpScreen(
         ) { page ->
             when (page.toSignupPager()) {
                 SignUpPage.Error -> {}
-                SignUpPage.Name -> NameScreen(
+                SignUpPage.Name -> FirstUserInfoScreen(
                     uiState = uiState,
                     updateName = viewModel::updateName,
                     updateNickname = viewModel::updateNickName,
@@ -119,13 +119,13 @@ fun SignUpScreen(
                     updateSchool = viewModel::updateSchool,
                 )
 
-                SignUpPage.Height -> HeightScreen(
+                SignUpPage.Height -> SecondUserInfoScreen(
                     uiState = uiState,
                     updateHeight = viewModel::updateHeight,
                     updateMbti = viewModel::updateMbti,
                 )
 
-                SignUpPage.Appearance -> AppearanceScreen(
+                SignUpPage.Appearance -> ThirdUserInfoScreen(
                     uiState = uiState,
                 )
             }
@@ -139,15 +139,15 @@ fun SignUpScreen(
             text = "다음",
             textStyle = FestimateTheme.typography.bodySemibold17,
             clickable = when (pagerState.currentPage) {
-                0 -> uiState.nameScreenResult
-                1 -> uiState.heightScreenResult
-                2 -> uiState.appearanceScreenResult
+                0 -> uiState.firstUserInfoScreenResult
+                1 -> uiState.secondUserInfoScreenResult
+                2 -> uiState.thirdUserInfoScreenResult
                 else -> false
             },
             backgroundColor = when (pagerState.currentPage) {
-                0 -> if (uiState.nameScreenResult) MainCoral else Gray03
-                1 -> if (uiState.heightScreenResult) MainCoral else Gray03
-                2 -> if (uiState.appearanceScreenResult) MainCoral else Gray03
+                0 -> if (uiState.firstUserInfoScreenResult) MainCoral else Gray03
+                1 -> if (uiState.secondUserInfoScreenResult) MainCoral else Gray03
+                2 -> if (uiState.thirdUserInfoScreenResult) MainCoral else Gray03
                 else -> Gray03
             },
             onClick = {

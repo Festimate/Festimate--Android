@@ -18,9 +18,9 @@ data class SignUpState(
     val i: Mbti = Mbti.Empty,
     val mbti: String = "",
     val apperanceList: List<String> = emptyList(),
-    val nameScreenResult: Boolean = false,
-    val heightScreenResult: Boolean = false,
-    val appearanceScreenResult: Boolean = false,
+    val firstUserInfoScreenResult: Boolean = false,
+    val secondUserInfoScreenResult: Boolean = false,
+    val thirdUserInfoScreenResult: Boolean = false,
 
     ) : UiState
 
