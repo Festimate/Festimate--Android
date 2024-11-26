@@ -23,11 +23,15 @@ import com.mtc.designsystem.component.FestimateTopAppBar
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray01
 import com.mtc.designsystem.theme.Gray04
+import com.mtc.designsystem.theme.MainCoral
+import com.mtc.designsystem.theme.White
+import com.mtc.signup.Appearance.Companion.toAppearance
 
 @Composable
-fun AppearanceScreen(
+fun ThirdUserInfoScreen(
     modifier: Modifier = Modifier,
     uiState: SignUpState,
+    updateAppearance: (Appearance) -> Unit,
 ) {
     val appearance = listOf(
         "고양이상",
@@ -75,11 +79,23 @@ fun AppearanceScreen(
             items(8) { item ->
                 FestimateBasicButton(
                     text = appearance[item],
-                    textColor = Gray04,
+                    textColor = if (item.toAppearance() == uiState.firstAppearance ||
+                        item.toAppearance() == uiState.secondAppearance
+                    ) {
+                        White
+                    } else {
+                        Gray04
+                    },
                     shape = RoundedCornerShape(11.dp),
                     textStyle = FestimateTheme.typography.bodySemibold15,
-                    backgroundColor = Gray01,
-                    onClick = {},
+                    backgroundColor = if (item.toAppearance() == uiState.firstAppearance ||
+                        item.toAppearance() == uiState.secondAppearance
+                    ) {
+                        MainCoral
+                    } else {
+                        Gray01
+                    },
+                    onClick = { updateAppearance(item.toAppearance()) },
                     padding = PaddingValues(horizontal = 56.dp, vertical = 35.dp),
                 )
             }

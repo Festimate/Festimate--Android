@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.mtc.home"
 }
+
+dependencies {
+    implementation(projects.core.datastore)
+}

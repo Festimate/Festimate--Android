@@ -38,7 +38,7 @@ import com.mtc.designsystem.theme.White
 import com.mtc.model.NicknameValidateResult
 
 @Composable
-fun NameScreen(
+fun FirstUserInfoScreen(
     modifier: Modifier = Modifier,
     uiState: SignUpState,
     updateName: (String) -> Unit,

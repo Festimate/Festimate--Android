@@ -1,12 +1,22 @@
 package com.mtc.home
 
+import androidx.lifecycle.viewModelScope
+import com.mtc.datastore.datastore.SecurityDataStore
 import com.mtc.model.MatchingInfo
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : BaseViewModel<HomeState, HomeSideEffect>(HomeState()) {
+class HomeViewModel @Inject constructor(
+    private val dataStore: SecurityDataStore,
+) : BaseViewModel<HomeState, HomeSideEffect>(HomeState()) {
+
+    init {
+        setAccountExist()
+    }
+
     val list1: List<MatchingInfo> = emptyList()
     val list2 = listOf(
         MatchingInfo(
@@ -48,6 +58,12 @@ class HomeViewModel @Inject constructor() : BaseViewModel<HomeState, HomeSideEff
                 matchingStateResult = MatchingStateResult.Success,
                 matchingInfo = list2,
             )
+        }
+    }
+
+    fun setAccountExist() {
+        viewModelScope.launch {
+            dataStore.setExistAccount(true)
         }
     }
 }

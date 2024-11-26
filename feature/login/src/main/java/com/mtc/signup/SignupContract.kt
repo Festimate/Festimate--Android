@@ -11,13 +11,18 @@ data class SignUpState(
     val age: String = "",
     val selectedGender: SelectedGender = SelectedGender.Empty,
     val school: String = "",
-    val height: Int = 0,
+    val height: String = "",
+    val m: Mbti = Mbti.Empty,
+    val b: Mbti = Mbti.Empty,
+    val t: Mbti = Mbti.Empty,
+    val i: Mbti = Mbti.Empty,
     val mbti: String = "",
+    val firstAppearance: Appearance = Appearance.Empty,
+    val secondAppearance: Appearance = Appearance.Empty,
     val apperanceList: List<String> = emptyList(),
-    val nameScreenResult: Boolean = false,
-    val heightScreenResult: Boolean = false,
-    val appearanceScreenResult: Boolean = false,
-
+    val firstUserInfoScreenResult: Boolean = false,
+    val secondUserInfoScreenResult: Boolean = false,
+    val thirdUserInfoScreenResult: Boolean = false,
 ) : UiState
 
 sealed interface SignUpSideEffect : SideEffect {

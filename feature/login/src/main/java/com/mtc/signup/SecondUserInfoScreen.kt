@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mtc.designsystem.component.FestimateBasicButton
@@ -23,11 +25,15 @@ import com.mtc.designsystem.theme.Gray01
 import com.mtc.designsystem.theme.Gray04
 import com.mtc.designsystem.theme.Gray06
 import com.mtc.designsystem.theme.MainCoral
+import com.mtc.designsystem.theme.White
+import com.mtc.signup.Mbti.Companion.toMbti
 
 @Composable
-fun HeightScreen(
+fun SecondUserInfoScreen(
     modifier: Modifier = Modifier,
     uiState: SignUpState,
+    updateHeight: (String) -> Unit,
+    updateMbti: (Mbti) -> Unit,
 ) {
     val mbti = listOf("E", "I", "N", "S", "F", "T", "P", "J")
     Column(
@@ -64,10 +70,16 @@ fun HeightScreen(
                 modifier = modifier
                     .fillMaxWidth(0.45f)
                     .padding(end = 10.dp),
+                value = uiState.height,
+                onValueChange = { updateHeight(it) },
                 shape = RoundedCornerShape(12.dp),
                 placeholder = "키를 입력해주세요",
                 textStyle = FestimateTheme.typography.bodyMedium13,
                 textColor = Gray04,
+                maxLength = 3,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.NumberPassword,
+                ),
             )
             Text(
                 text = "cm",
@@ -103,11 +115,79 @@ fun HeightScreen(
             items(8) { item ->
                 FestimateBasicButton(
                     text = mbti[item],
-                    textColor = Gray04,
+                    textColor = when (item.toMbti()) {
+                        Mbti.E, Mbti.I -> {
+                            if (item.toMbti() == uiState.m) {
+                                White
+                            } else {
+                                Gray04
+                            }
+                        }
+
+                        Mbti.N, Mbti.S -> {
+                            if (item.toMbti() == uiState.b) {
+                                White
+                            } else {
+                                Gray04
+                            }
+                        }
+
+                        Mbti.F, Mbti.T -> {
+                            if (item.toMbti() == uiState.t) {
+                                White
+                            } else {
+                                Gray04
+                            }
+                        }
+
+                        Mbti.P, Mbti.J -> {
+                            if (item.toMbti() == uiState.i) {
+                                White
+                            } else {
+                                Gray04
+                            }
+                        }
+
+                        else -> Gray04
+                    },
                     shape = RoundedCornerShape(11.dp),
                     textStyle = FestimateTheme.typography.bodySemibold15,
-                    backgroundColor = Gray01,
-                    onClick = {},
+                    backgroundColor = when (item.toMbti()) {
+                        Mbti.E, Mbti.I -> {
+                            if (item.toMbti() == uiState.m) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
+                        }
+
+                        Mbti.N, Mbti.S -> {
+                            if (item.toMbti() == uiState.b) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
+                        }
+
+                        Mbti.F, Mbti.T -> {
+                            if (item.toMbti() == uiState.t) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
+                        }
+
+                        Mbti.P, Mbti.J -> {
+                            if (item.toMbti() == uiState.i) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
+                        }
+
+                        else -> Gray01
+                    },
+                    onClick = { updateMbti(item.toMbti()) },
                     padding = PaddingValues(horizontal = 78.dp, vertical = 15.dp),
                 )
             }
