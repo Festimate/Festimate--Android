@@ -36,6 +36,13 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
                     maxHeight = idealTypeInfo.maxHeight!!,
                     mbti = idealTypeInfo.mbti!!,
                     appearanceList = idealTypeInfo.apperanceList!!,
+                    idealTypeResult = true,
+                )
+            }
+        } else {
+            intent {
+                copy(
+                    idealTypeResult = false,
                 )
             }
         }
