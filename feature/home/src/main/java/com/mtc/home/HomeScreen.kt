@@ -146,7 +146,7 @@ fun HomeScreen(
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
-            text = "다음",
+            text = "매칭 추가하기",
             textStyle = FestimateTheme.typography.bodySemibold17,
             clickable = true,
             backgroundColor = MainCoral,
