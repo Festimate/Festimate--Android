@@ -44,6 +44,7 @@ fun SignUpRoute(
     LaunchedEffect(uiState) {
         viewModel.apply {
             nameScreenResultValidate()
+            heightScreenResultValidate()
         }
     }
     LaunchedEffectWithLifecycle {
@@ -120,6 +121,8 @@ fun SignUpScreen(
 
                 SignUpPage.Height -> HeightScreen(
                     uiState = uiState,
+                    updateHeight = viewModel::updateHeight,
+                    updateMbti = viewModel::updateMbti,
                 )
 
                 SignUpPage.Appearance -> AppearanceScreen(
