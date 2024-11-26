@@ -2,6 +2,7 @@ package com.mtc.signup
 
 import android.util.Log
 import com.mtc.model.NicknameValidateResult
+import com.mtc.signup.Appearance.Companion.toModel
 import com.mtc.signup.Mbti.Companion.toModel
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -158,6 +159,44 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
         }
     }
 
+    fun updateAppearance(appearance: Appearance) {
+        if (appearance == uiState.value.firstAppearance) {
+            intent {
+                copy(
+                    firstAppearance = uiState.value.secondAppearance,
+                    secondAppearance = Appearance.Empty,
+                )
+            }
+        } else if (appearance == uiState.value.secondAppearance) {
+            intent {
+                copy(
+                    secondAppearance = Appearance.Empty,
+                )
+            }
+        } else {
+            if (uiState.value.firstAppearance == Appearance.Empty) {
+                intent {
+                    copy(
+                        firstAppearance = appearance,
+                    )
+                }
+            } else if (uiState.value.secondAppearance == Appearance.Empty) {
+                intent {
+                    copy(
+                        secondAppearance = appearance,
+                    )
+                }
+            } else {
+                intent {
+                    copy(
+                        firstAppearance = uiState.value.secondAppearance,
+                        secondAppearance = appearance,
+                    )
+                }
+            }
+        }
+    }
+
     fun firstUserInfoScreenResultValidate() {
         if (uiState.value.username.isNotBlank() && uiState.value.nicknameValidateResult == NicknameValidateResult.Success &&
             uiState.value.age.isNotBlank() && uiState.value.selectedGender != SelectedGender.Empty && uiState.value.school.isNotBlank()
@@ -185,13 +224,31 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
                     secondUserInfoScreenResult = true,
                 )
             }
-        } else intent {
-            copy(
-                mbti = uiState.value.run {
-                    m.toModel() + b.toModel() + t.toModel() + i.toModel()
-                },
-                secondUserInfoScreenResult = false,
-            )
+        } else {
+            intent {
+                copy(
+                    mbti = uiState.value.run {
+                        m.toModel() + b.toModel() + t.toModel() + i.toModel()
+                    },
+                    secondUserInfoScreenResult = false,
+                )
+            }
+        }
+    }
+
+    fun thirdUserInfoScreenResultValidate() {
+        if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true) {
+            intent {
+                copy(
+                    thirdUserInfoScreenResult = true,
+                )
+            }
+        } else {
+            intent {
+                copy(
+                    thirdUserInfoScreenResult = false,
+                )
+            }
         }
     }
 

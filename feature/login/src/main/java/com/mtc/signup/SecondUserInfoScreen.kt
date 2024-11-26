@@ -117,23 +117,35 @@ fun SecondUserInfoScreen(
                     text = mbti[item],
                     textColor = when (item.toMbti()) {
                         Mbti.E, Mbti.I -> {
-                            if (item.toMbti() == uiState.m) White
-                            else Gray04
+                            if (item.toMbti() == uiState.m) {
+                                White
+                            } else {
+                                Gray04
+                            }
                         }
 
                         Mbti.N, Mbti.S -> {
-                            if (item.toMbti() == uiState.b) White
-                            else Gray04
+                            if (item.toMbti() == uiState.b) {
+                                White
+                            } else {
+                                Gray04
+                            }
                         }
 
                         Mbti.F, Mbti.T -> {
-                            if (item.toMbti() == uiState.t) White
-                            else Gray04
+                            if (item.toMbti() == uiState.t) {
+                                White
+                            } else {
+                                Gray04
+                            }
                         }
 
                         Mbti.P, Mbti.J -> {
-                            if (item.toMbti() == uiState.i) White
-                            else Gray04
+                            if (item.toMbti() == uiState.i) {
+                                White
+                            } else {
+                                Gray04
+                            }
                         }
 
                         else -> Gray04
@@ -142,23 +154,35 @@ fun SecondUserInfoScreen(
                     textStyle = FestimateTheme.typography.bodySemibold15,
                     backgroundColor = when (item.toMbti()) {
                         Mbti.E, Mbti.I -> {
-                            if (item.toMbti() == uiState.m) MainCoral
-                            else Gray01
+                            if (item.toMbti() == uiState.m) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
                         }
 
                         Mbti.N, Mbti.S -> {
-                            if (item.toMbti() == uiState.b) MainCoral
-                            else Gray01
+                            if (item.toMbti() == uiState.b) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
                         }
 
                         Mbti.F, Mbti.T -> {
-                            if (item.toMbti() == uiState.t) MainCoral
-                            else Gray01
+                            if (item.toMbti() == uiState.t) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
                         }
 
                         Mbti.P, Mbti.J -> {
-                            if (item.toMbti() == uiState.i) MainCoral
-                            else Gray01
+                            if (item.toMbti() == uiState.i) {
+                                MainCoral
+                            } else {
+                                Gray01
+                            }
                         }
 
                         else -> Gray01

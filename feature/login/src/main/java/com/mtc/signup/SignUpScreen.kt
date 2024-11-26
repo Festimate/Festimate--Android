@@ -45,6 +45,7 @@ fun SignUpRoute(
         viewModel.apply {
             firstUserInfoScreenResultValidate()
             secondUserInfoScreenResultValidate()
+            thirdUserInfoScreenResultValidate()
         }
     }
     LaunchedEffectWithLifecycle {
@@ -127,6 +128,7 @@ fun SignUpScreen(
 
                 SignUpPage.Appearance -> ThirdUserInfoScreen(
                     uiState = uiState,
+                    updateAppearance = viewModel::updateAppearance,
                 )
             }
         }

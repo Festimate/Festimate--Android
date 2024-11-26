@@ -17,12 +17,13 @@ data class SignUpState(
     val t: Mbti = Mbti.Empty,
     val i: Mbti = Mbti.Empty,
     val mbti: String = "",
+    val firstAppearance: Appearance = Appearance.Empty,
+    val secondAppearance: Appearance = Appearance.Empty,
     val apperanceList: List<String> = emptyList(),
     val firstUserInfoScreenResult: Boolean = false,
     val secondUserInfoScreenResult: Boolean = false,
     val thirdUserInfoScreenResult: Boolean = false,
-
-    ) : UiState
+) : UiState
 
 sealed interface SignUpSideEffect : SideEffect {
     data object Empty : SignUpSideEffect
