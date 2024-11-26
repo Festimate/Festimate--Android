@@ -9,8 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class IdealTypeViewModel @Inject constructor(
-) : BaseViewModel<IdealTypeState, IdealTypeSideEffect>(IdealTypeState()) {
+class IdealTypeViewModel @Inject constructor() : BaseViewModel<IdealTypeState, IdealTypeSideEffect>(IdealTypeState()) {
 
     fun updateMinAge(minAge: String) {
         intent {
@@ -200,18 +199,19 @@ class IdealTypeViewModel @Inject constructor(
     }
 
     fun secondIdealTypeScreenResultValidate() {
-        if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true)
+        if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true) {
             intent {
                 copy(
                     secondIdealTypeScreenResult = true,
                 )
             }
-        else
+        } else {
             intent {
                 copy(
                     secondIdealTypeScreenResult = false,
                 )
             }
+        }
     }
 
     fun updateIdealTypeResult() {

@@ -61,7 +61,6 @@ fun FirstIdealTypeScreen(
                 style = FestimateTheme.typography.bodySemibold17,
                 color = MainCoral,
             )
-
         }
         FestimateInputRangeTextField(
             uiState = uiState,
@@ -86,7 +85,6 @@ fun FirstIdealTypeScreen(
                 style = FestimateTheme.typography.bodySemibold17,
                 color = MainCoral,
             )
-
         }
         FestimateInputRangeTextField(
             uiState = uiState,

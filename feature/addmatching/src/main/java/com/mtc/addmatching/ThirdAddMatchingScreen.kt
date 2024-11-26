@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 fun ThirdAddMatchingScreen(
     modifier: Modifier = Modifier,
     uiState: AddMatchingState,
-){
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

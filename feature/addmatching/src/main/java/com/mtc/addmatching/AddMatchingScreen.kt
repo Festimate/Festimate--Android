@@ -157,7 +157,6 @@ fun AddMatchingScreen(
                 clickable = true,
                 backgroundColor = MainCoral,
                 onClick = {
-
                 },
                 padding = PaddingValues(horizontal = 156.dp, vertical = 17.dp),
             )

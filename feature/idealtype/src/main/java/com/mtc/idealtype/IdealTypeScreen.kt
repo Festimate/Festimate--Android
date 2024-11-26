@@ -60,7 +60,7 @@ fun IdealTypeRoute(
                     uiState.minHeight,
                     uiState.maxHeight,
                     uiState.mbti,
-                    uiState.appearanceList
+                    uiState.appearanceList,
                 )
             }
         }
