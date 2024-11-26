@@ -42,6 +42,7 @@ internal fun MainScreen(
                 )
                 addMatchingGraph(
                     padding = innerPadding,
+                    navigateToHome = navigator::navigateToHome,
                 )
             }
         },

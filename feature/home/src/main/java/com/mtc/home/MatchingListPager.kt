@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.Text
@@ -25,13 +23,10 @@ import com.mtc.designsystem.theme.FestimateTheme
 fun MatchingListPager(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    // state 바꿔야됨
     homeState: HomeState,
     contentPadding: Dp = 50.dp,
     pageSpacing: Dp = 16.dp,
 ) {
-    Spacer(modifier = modifier.padding(top = 165.dp))
-
     HorizontalPager(
         modifier = modifier
             .fillMaxWidth(),
@@ -47,9 +42,6 @@ fun MatchingListPager(
                         painter = painterResource(id = R.drawable.img_empty_matching),
                         contentDescription = "empty",
                     )
-                    Column(
-                        modifier = modifier.fillMaxSize(),
-                    ) {}
                 }
 
             MatchingStateResult.Loading ->
@@ -59,17 +51,17 @@ fun MatchingListPager(
                         contentDescription = "loading",
                     )
                     Column(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Spacer(modifier = modifier.weight(0.40f))
+                        Spacer(modifier = Modifier.weight(0.7f))
                         Text(
-                            modifier = modifier.align(Alignment.CenterHorizontally),
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
                             text = "이상형 조건에 맞는 MATE를\n찾는 중이니 조금만 기다려주세요!",
                             style = FestimateTheme.typography.bodySemibold15,
                             textAlign = TextAlign.Center,
                         )
-                        Spacer(modifier = modifier.weight(0.60f))
+                        Spacer(modifier = Modifier.weight(0.3f))
                     }
                 }
 

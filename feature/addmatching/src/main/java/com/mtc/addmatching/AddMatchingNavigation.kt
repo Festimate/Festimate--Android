@@ -16,11 +16,13 @@ fun NavController.navigateAddMatching(navOptions: NavOptions) {
 fun NavGraphBuilder.addMatchingGraph(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
 ) {
     composable<AddMatching> {
         AddMatchingRoute(
             padding = padding,
             modifier = modifier,
+            navigateHome = navigateToHome,
         )
     }
 }
