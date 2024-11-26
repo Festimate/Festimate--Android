@@ -1,5 +1,6 @@
 package com.mtc.idealtype
 
+import com.mtc.model.Appearance
 import com.mtc.model.Mbti
 import com.mtc.ui.base.SideEffect
 import com.mtc.ui.base.UiState
@@ -14,9 +15,10 @@ data class IdealTypeState(
     val t: Mbti = Mbti.Empty,
     val i: Mbti = Mbti.Empty,
     val mbti: String = "",
+    val firstAppearance: Appearance = Appearance.Empty,
+    val secondAppearance: Appearance = Appearance.Empty,
     val firstIdealTypeScreenResult: Boolean = false,
     val secondIdealTypeScreenResult: Boolean = false,
-    val thirdIdealTypeScreenResult: Boolean = false,
 ) : UiState
 
 sealed interface IdealTypeSideEffect : SideEffect {

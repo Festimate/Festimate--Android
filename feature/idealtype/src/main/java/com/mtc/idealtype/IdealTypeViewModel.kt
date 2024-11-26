@@ -1,5 +1,7 @@
 package com.mtc.idealtype
 
+import com.mtc.model.Appearance
+import com.mtc.model.Appearance.Companion.toModel
 import com.mtc.model.Mbti
 import com.mtc.model.Mbti.Companion.toModel
 import com.mtc.ui.base.BaseViewModel
@@ -121,7 +123,45 @@ class IdealTypeViewModel @Inject constructor(
         }
     }
 
-    fun firstUserInfoScreenResultValidate() {
+    fun updateAppearance(appearance: Appearance) {
+        if (appearance == uiState.value.firstAppearance) {
+            intent {
+                copy(
+                    firstAppearance = uiState.value.secondAppearance,
+                    secondAppearance = Appearance.Empty,
+                )
+            }
+        } else if (appearance == uiState.value.secondAppearance) {
+            intent {
+                copy(
+                    secondAppearance = Appearance.Empty,
+                )
+            }
+        } else {
+            if (uiState.value.firstAppearance == Appearance.Empty) {
+                intent {
+                    copy(
+                        firstAppearance = appearance,
+                    )
+                }
+            } else if (uiState.value.secondAppearance == Appearance.Empty) {
+                intent {
+                    copy(
+                        secondAppearance = appearance,
+                    )
+                }
+            } else {
+                intent {
+                    copy(
+                        firstAppearance = uiState.value.secondAppearance,
+                        secondAppearance = appearance,
+                    )
+                }
+            }
+        }
+    }
+
+    fun firstIdealTypeScreenResultValidate() {
         if (uiState.value.minAge.isNotBlank() && uiState.value.maxAge.isNotBlank() && uiState.value.minHeight.isNotBlank() &&
             uiState.value.maxHeight.isNotBlank() && uiState.value.m.toModel()?.isNotBlank() == true &&
             uiState.value.b.toModel()?.isNotBlank() == true &&
@@ -148,10 +188,24 @@ class IdealTypeViewModel @Inject constructor(
         }
     }
 
+    fun secondIdealTypeScreenResultValidate() {
+        if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true)
+            intent {
+                copy(
+                    secondIdealTypeScreenResult = true,
+                )
+            }
+        else
+            intent {
+                copy(
+                    secondIdealTypeScreenResult = false,
+                )
+            }
+    }
+
     fun updateIdealTypeResult() {
         postSideEffect(
             IdealTypeSideEffect.Success,
         )
     }
-
 }

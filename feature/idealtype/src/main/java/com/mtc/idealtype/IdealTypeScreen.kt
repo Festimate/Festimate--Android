@@ -26,7 +26,7 @@ import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray03
 import com.mtc.designsystem.theme.MainCoral
-import com.mtc.idealtype.IdealTypePage.Companion.toSignupPager
+import com.mtc.idealtype.IdealTypePage.Companion.toIdealTypePager
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -43,7 +43,8 @@ fun IdealTypeRoute(
 
     LaunchedEffect(uiState) {
         viewModel.apply {
-            firstUserInfoScreenResultValidate()
+            firstIdealTypeScreenResultValidate()
+            secondIdealTypeScreenResultValidate()
         }
     }
 
@@ -72,12 +73,12 @@ fun IdealTypeScreen(
     viewModel: IdealTypeViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
 
-    BackHandler(enabled = pagerState.currentPage == 1 || pagerState.currentPage == 2) {
+    BackHandler(enabled = pagerState.currentPage == 1) {
         coroutineScope.launch {
             when (pagerState.currentPage) {
-                1, 2 -> pagerState.animateScrollToPage(
+                1 -> pagerState.animateScrollToPage(
                     pagerState.currentPage - 1,
                 )
             }
@@ -95,7 +96,7 @@ fun IdealTypeScreen(
                 .padding(horizontal = 16.dp)
                 .customClickable(
                     rippleEnabled = false,
-                    onClick = if (pagerState.currentPage == 1 || pagerState.currentPage == 2) {
+                    onClick = if (pagerState.currentPage == 1) {
                         {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
@@ -114,7 +115,7 @@ fun IdealTypeScreen(
             userScrollEnabled = false,
             verticalAlignment = Alignment.Top,
         ) { page ->
-            when (page.toSignupPager()) {
+            when (page.toIdealTypePager()) {
                 IdealTypePage.Error -> {}
                 IdealTypePage.FirstIdealType -> FirstIdealTypeScreen(
                     uiState = uiState,
@@ -127,10 +128,7 @@ fun IdealTypeScreen(
 
                 IdealTypePage.SecondIdealType -> SecondIdealTypeScreen(
                     uiState = uiState,
-                )
-
-                IdealTypePage.ThirdIdealType -> ThirdIdealTypeScreen(
-                    uiState = uiState,
+                    updateAppearance = viewModel::updateAppearance,
                 )
             }
         }
@@ -145,17 +143,15 @@ fun IdealTypeScreen(
             clickable = when (pagerState.currentPage) {
                 0 -> uiState.firstIdealTypeScreenResult
                 1 -> uiState.secondIdealTypeScreenResult
-                2 -> uiState.thirdIdealTypeScreenResult
                 else -> false
             },
             backgroundColor = when (pagerState.currentPage) {
                 0 -> if (uiState.firstIdealTypeScreenResult) MainCoral else Gray03
                 1 -> if (uiState.secondIdealTypeScreenResult) MainCoral else Gray03
-                2 -> if (uiState.thirdIdealTypeScreenResult) MainCoral else Gray03
                 else -> Gray03
             },
             onClick = {
-                if (pagerState.currentPage == 0 || pagerState.currentPage == 1) {
+                if (pagerState.currentPage == 0) {
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
