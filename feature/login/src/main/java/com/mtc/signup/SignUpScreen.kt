@@ -121,7 +121,7 @@ fun SignUpScreen(
         ) { page ->
             when (page.toSignupPager()) {
                 SignUpPage.Error -> {}
-                SignUpPage.Name -> FirstUserInfoScreen(
+                SignUpPage.FirstUserInfo -> FirstUserInfoScreen(
                     uiState = uiState,
                     updateName = viewModel::updateName,
                     updateNickname = viewModel::updateNickName,
@@ -131,13 +131,13 @@ fun SignUpScreen(
                     updateSchool = viewModel::updateSchool,
                 )
 
-                SignUpPage.Height -> SecondUserInfoScreen(
+                SignUpPage.SecondUserInfo -> SecondUserInfoScreen(
                     uiState = uiState,
                     updateHeight = viewModel::updateHeight,
                     updateMbti = viewModel::updateMbti,
                 )
 
-                SignUpPage.Appearance -> ThirdUserInfoScreen(
+                SignUpPage.ThirdUserInfo -> ThirdUserInfoScreen(
                     uiState = uiState,
                     updateAppearance = viewModel::updateAppearance,
                 )
