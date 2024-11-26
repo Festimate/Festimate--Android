@@ -1,5 +1,7 @@
 package com.mtc.signup
 
+import com.mtc.model.Appearance
+import com.mtc.model.Mbti
 import com.mtc.model.NicknameValidateResult
 import com.mtc.ui.base.SideEffect
 import com.mtc.ui.base.UiState

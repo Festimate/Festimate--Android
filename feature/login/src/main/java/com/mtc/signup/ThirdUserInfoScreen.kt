@@ -25,7 +25,8 @@ import com.mtc.designsystem.theme.Gray01
 import com.mtc.designsystem.theme.Gray04
 import com.mtc.designsystem.theme.MainCoral
 import com.mtc.designsystem.theme.White
-import com.mtc.signup.Appearance.Companion.toAppearance
+import com.mtc.model.Appearance
+import com.mtc.model.Appearance.Companion.toAppearance
 
 @Composable
 fun ThirdUserInfoScreen(

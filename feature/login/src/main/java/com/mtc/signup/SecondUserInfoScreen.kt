@@ -26,7 +26,8 @@ import com.mtc.designsystem.theme.Gray04
 import com.mtc.designsystem.theme.Gray06
 import com.mtc.designsystem.theme.MainCoral
 import com.mtc.designsystem.theme.White
-import com.mtc.signup.Mbti.Companion.toMbti
+import com.mtc.model.Mbti
+import com.mtc.model.Mbti.Companion.toMbti
 
 @Composable
 fun SecondUserInfoScreen(
