@@ -22,12 +22,12 @@ class HomeViewModel @Inject constructor(
     fun getUserInfo() {
         intent {
             copy(
-                nickname = "이석찬",
-                school = "가톨릭대학교",
+                userNickname = "이석찬",
+                userSchool = "가톨릭대학교",
             )
         }
     }
-    
+
     fun getMatchingList() {
         val list1: List<MatchingInfo> = emptyList()
         val list2 = listOf(
@@ -69,5 +69,11 @@ class HomeViewModel @Inject constructor(
                 matchingInfo = list2,
             )
         }
+    }
+
+    fun navigateAddMatching() {
+        postSideEffect(
+            HomeSideEffect.Success,
+        )
     }
 }
