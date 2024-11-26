@@ -1,6 +1,5 @@
 package com.mtc.addmatching
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +13,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -43,9 +43,11 @@ fun AddMatchingRoute(
     idealTypeInfo: IdealTypeInfo,
     viewModel: AddMatchingViewModel = hiltViewModel(),
 ) {
-    Log.d("asdasd", idealTypeInfo.toString())
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(idealTypeInfo) {
+        viewModel.updateIdealTypeInfo(idealTypeInfo)
+    }
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
