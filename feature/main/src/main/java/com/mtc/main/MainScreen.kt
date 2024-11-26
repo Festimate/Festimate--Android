@@ -9,8 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mtc.addmatching.addMatchingGraph
+import com.mtc.datetaste.dateTasteNavGraph
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.home.homeNavGraph
+import com.mtc.idealtype.idealTypeNavGraph
 import com.mtc.login.navigation.loginNavGraph
 
 @Composable
@@ -42,7 +44,17 @@ internal fun MainScreen(
                 )
                 addMatchingGraph(
                     padding = innerPadding,
+                    navigateToIdealType = navigator::navigateToIdealType,
+                    navigateToDateTaste = navigator::navigateToDateTaste,
                     navigateToHome = navigator::navigateToHome,
+                )
+                idealTypeNavGraph(
+                    padding = innerPadding,
+                    navigateToAddMatching = navigator::navigateToAddMatching,
+                )
+                dateTasteNavGraph(
+                    padding = innerPadding,
+                    navigateToAddMatching = navigator::navigateToAddMatching,
                 )
             }
         },

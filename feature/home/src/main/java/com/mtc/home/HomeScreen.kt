@@ -151,7 +151,7 @@ fun HomeScreen(
             clickable = true,
             backgroundColor = MainCoral,
             onClick = { viewModel.navigateAddMatching() },
-            padding = PaddingValues(horizontal = 156.dp, vertical = 17.dp),
+            padding = PaddingValues(horizontal = 124.dp, vertical = 17.dp),
         )
     }
 }

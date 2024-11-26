@@ -10,4 +10,6 @@ dependencies {
     implementation(projects.feature.login)
     implementation(projects.feature.home)
     implementation(projects.feature.addmatching)
+    implementation(projects.feature.idealtype)
+    implementation(projects.feature.datetaste)
 }

@@ -1,5 +1,6 @@
 package com.mtc.addmatching
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +18,8 @@ import kotlinx.coroutines.flow.collectLatest
 fun AddMatchingRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
+    navigateIdealType: () -> Unit,
+    navigateDateTaste: () -> Unit,
     navigateHome: () -> Unit,
     viewModel: AddMatchingViewModel = hiltViewModel(),
 ) {
@@ -29,6 +32,8 @@ fun AddMatchingRoute(
                 AddMatchingSideEffect.Error -> {}
                 AddMatchingSideEffect.Loading -> {}
                 AddMatchingSideEffect.Success -> navigateHome()
+                AddMatchingSideEffect.IdealType -> navigateIdealType()
+                AddMatchingSideEffect.DateTaste -> navigateDateTaste()
             }
         }
     }
@@ -49,6 +54,17 @@ fun AddMatchingScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "matching")
+        Text(
+            text = "ideal",
+            modifier = Modifier.clickable {
+                viewModel.navigateIdealType()
+            },
+        )
+        Text(
+            text = "datetype",
+            modifier = Modifier.clickable {
+                viewModel.navigateDateTaste()
+            },
+        )
     }
 }

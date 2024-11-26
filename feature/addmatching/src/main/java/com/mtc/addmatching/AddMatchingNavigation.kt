@@ -16,12 +16,16 @@ fun NavController.navigateAddMatching(navOptions: NavOptions) {
 fun NavGraphBuilder.addMatchingGraph(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
+    navigateToIdealType: () -> Unit,
+    navigateToDateTaste: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
     composable<AddMatching> {
         AddMatchingRoute(
             padding = padding,
             modifier = modifier,
+            navigateIdealType = navigateToIdealType,
+            navigateDateTaste = navigateToDateTaste,
             navigateHome = navigateToHome,
         )
     }

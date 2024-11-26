@@ -2,10 +2,10 @@ package com.mtc.signup
 
 import android.util.Log
 import com.mtc.model.Appearance
-import com.mtc.model.NicknameValidateResult
 import com.mtc.model.Appearance.Companion.toModel
 import com.mtc.model.Mbti
 import com.mtc.model.Mbti.Companion.toModel
+import com.mtc.model.NicknameValidateResult
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

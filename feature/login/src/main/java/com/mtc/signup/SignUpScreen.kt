@@ -1,5 +1,6 @@
 package com.mtc.signup
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -74,6 +75,16 @@ fun SignUpScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
+
+    BackHandler(enabled = pagerState.currentPage == 1 || pagerState.currentPage == 2) {
+        coroutineScope.launch {
+            when (pagerState.currentPage) {
+                1, 2 -> pagerState.animateScrollToPage(
+                    pagerState.currentPage - 1,
+                )
+            }
+        }
+    }
 
     Column(
         modifier = modifier.fillMaxSize(),

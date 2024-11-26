@@ -27,4 +27,6 @@ sealed interface AddMatchingSideEffect : SideEffect {
     data object Error : AddMatchingSideEffect
     data object Loading : AddMatchingSideEffect
     data object Success : AddMatchingSideEffect
+    data object IdealType : AddMatchingSideEffect
+    data object DateTaste : AddMatchingSideEffect
 }
