@@ -159,6 +159,17 @@ class IdealTypeViewModel @Inject constructor(
                 }
             }
         }
+
+        val apperanceList = mutableListOf<String>()
+        apperanceList.add(uiState.value.firstAppearance.toModel()!!)
+        if (uiState.value.secondAppearance.toModel()?.isNotBlank() == true) {
+            apperanceList.add(uiState.value.secondAppearance.toModel()!!)
+        }
+        intent {
+            copy(
+                appearanceList = apperanceList,
+            )
+        }
     }
 
     fun firstIdealTypeScreenResultValidate() {

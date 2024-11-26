@@ -1,5 +1,6 @@
 package com.mtc.addmatching
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import com.mtc.designsystem.R
 import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.MainCoral
+import com.mtc.model.IdealTypeInfo
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -38,8 +40,10 @@ fun AddMatchingRoute(
     navigateIdealType: () -> Unit,
     navigateDateTaste: () -> Unit,
     navigateHome: () -> Unit,
+    idealTypeInfo: IdealTypeInfo,
     viewModel: AddMatchingViewModel = hiltViewModel(),
 ) {
+    Log.d("asdasd", idealTypeInfo.toString())
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffectWithLifecycle {

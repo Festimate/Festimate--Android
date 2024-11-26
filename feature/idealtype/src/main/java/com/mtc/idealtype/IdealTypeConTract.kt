@@ -17,6 +17,7 @@ data class IdealTypeState(
     val mbti: String = "",
     val firstAppearance: Appearance = Appearance.Empty,
     val secondAppearance: Appearance = Appearance.Empty,
+    val appearanceList: List<String> = emptyList(),
     val firstIdealTypeScreenResult: Boolean = false,
     val secondIdealTypeScreenResult: Boolean = false,
 ) : UiState

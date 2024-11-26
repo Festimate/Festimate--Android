@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 fun IdealTypeRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateAddMatching: () -> Unit,
+    navigateAddMatching: (String, String, String, String, String, List<String>) -> Unit,
     viewModel: IdealTypeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -54,7 +54,14 @@ fun IdealTypeRoute(
                 IdealTypeSideEffect.Empty -> {}
                 IdealTypeSideEffect.Error -> {}
                 IdealTypeSideEffect.Loading -> {}
-                IdealTypeSideEffect.Success -> navigateAddMatching()
+                IdealTypeSideEffect.Success -> navigateAddMatching(
+                    uiState.minAge,
+                    uiState.maxAge,
+                    uiState.minHeight,
+                    uiState.maxHeight,
+                    uiState.mbti,
+                    uiState.appearanceList
+                )
             }
         }
     }

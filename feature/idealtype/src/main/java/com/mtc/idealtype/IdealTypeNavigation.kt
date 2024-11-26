@@ -16,7 +16,7 @@ fun NavController.navigateIdealType(navOptions: NavOptions) {
 fun NavGraphBuilder.idealTypeNavGraph(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateToAddMatching: () -> Unit,
+    navigateToAddMatching: (String, String, String, String, String, List<String>) -> Unit,
 ) {
     composable<IdealType> {
         IdealTypeRoute(

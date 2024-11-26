@@ -49,8 +49,24 @@ internal class MainNavigator(
         }
     }
 
-    fun navigateToAddMatching() {
-        navController.navigate(AddMatching) {
+    fun navigateToAddMatching(
+        minAge: String? = null,
+        maxAge: String? = null,
+        minHeight: String? = null,
+        maxHeight: String? = null,
+        mbti: String? = null,
+        appearanceList: List<String>? = null,
+    ) {
+        navController.navigate(
+            AddMatching(
+                minAge = minAge,
+                maxAge = maxAge,
+                minHeight = minHeight,
+                maxHeight = maxHeight,
+                mbti = mbti,
+                apperanceList = appearanceList,
+            ),
+        ) {
             popUpTo(Home) {
                 inclusive = false
             }
