@@ -8,7 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mtc.addmatching.AddMatching
+import com.mtc.datetaste.DateTaste
 import com.mtc.home.Home
+import com.mtc.idealtype.IdealType
 import com.mtc.login.navigation.Login
 import com.mtc.login.navigation.SignUp
 import com.mtc.navigation.Route
@@ -47,12 +49,36 @@ internal class MainNavigator(
         }
     }
 
-    fun navigateToAddMatching() {
-        navController.navigate(AddMatching) {
-            popUpTo(navController.graph.id) {
-                inclusive = true
+    fun navigateToAddMatching(
+        minAge: String? = null,
+        maxAge: String? = null,
+        minHeight: String? = null,
+        maxHeight: String? = null,
+        mbti: String? = null,
+        appearanceList: List<String>? = null,
+    ) {
+        navController.navigate(
+            AddMatching(
+                minAge = minAge,
+                maxAge = maxAge,
+                minHeight = minHeight,
+                maxHeight = maxHeight,
+                mbti = mbti,
+                apperanceList = appearanceList,
+            ),
+        ) {
+            popUpTo(Home) {
+                inclusive = false
             }
         }
+    }
+
+    fun navigateToIdealType() {
+        navController.navigate(IdealType)
+    }
+
+    fun navigateToDateTaste() {
+        navController.navigate(DateTaste)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean {

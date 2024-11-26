@@ -1,4 +1,4 @@
-package com.mtc.signup
+package com.mtc.idealtype
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,16 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mtc.designsystem.component.FestimateBasicButton
-import com.mtc.designsystem.component.FestimateBasicTextField
 import com.mtc.designsystem.component.FestimateTopAppBar
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray01
@@ -26,70 +23,82 @@ import com.mtc.designsystem.theme.Gray04
 import com.mtc.designsystem.theme.Gray06
 import com.mtc.designsystem.theme.MainCoral
 import com.mtc.designsystem.theme.White
+import com.mtc.idealtype.component.FestimateInputRangeTextField
 import com.mtc.model.Mbti
 import com.mtc.model.Mbti.Companion.toMbti
 
 @Composable
-fun SecondUserInfoScreen(
+fun FirstIdealTypeScreen(
     modifier: Modifier = Modifier,
-    uiState: SignUpState,
-    updateHeight: (String) -> Unit,
+    uiState: IdealTypeState,
+    updateMinAge: (String) -> Unit,
+    updateMaxAge: (String) -> Unit,
+    updateMinHeight: (String) -> Unit,
+    updateMaxHeight: (String) -> Unit,
     updateMbti: (Mbti) -> Unit,
 ) {
     val mbti = listOf("E", "I", "N", "S", "F", "T", "P", "J")
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
     ) {
         FestimateTopAppBar(
-            signupPageNumber = "2",
-            signupPageContent = "내 정보 입력",
+            signupPageNumber = "1",
+            signupPageContent = "내 이상형 정보 입력",
         )
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp),
+        ) {
+            Text(
+                text = "나이 ",
+                style = FestimateTheme.typography.bodySemibold17,
+                color = Gray06,
+            )
+            Text(
+                text = "*",
+                style = FestimateTheme.typography.bodySemibold17,
+                color = MainCoral,
+            )
+        }
+        FestimateInputRangeTextField(
+            uiState = uiState,
+            minPlaceholder = "최소",
+            maxPlaceholder = "최대",
+            subtitle = "세",
+            minValue = uiState.minAge,
+            maxValue = uiState.maxAge,
+            updateMinValueChange = updateMinAge,
+            updateMaxValueChange = updateMaxAge,
+        )
+        Row(
+            modifier = Modifier.padding(top = 18.dp, bottom = 10.dp),
         ) {
             Text(
                 text = "키 ",
                 style = FestimateTheme.typography.bodySemibold17,
                 color = Gray06,
-                textAlign = TextAlign.Center,
             )
             Text(
-                modifier = modifier.padding(end = 8.dp),
                 text = "*",
                 style = FestimateTheme.typography.bodySemibold17,
                 color = MainCoral,
-                textAlign = TextAlign.Center,
             )
         }
+        FestimateInputRangeTextField(
+            uiState = uiState,
+            minPlaceholder = "최소",
+            maxPlaceholder = "최대",
+            subtitle = "cm",
+            minValue = uiState.minHeight,
+            maxValue = uiState.maxHeight,
+            updateMinValueChange = updateMinHeight,
+            updateMaxValueChange = updateMaxHeight,
+        )
+
         Row(
-            modifier = modifier.padding(top = 14.dp, bottom = 22.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            FestimateBasicTextField(
-                modifier = modifier
-                    .fillMaxWidth(0.45f)
-                    .padding(end = 10.dp),
-                value = uiState.height,
-                onValueChange = { updateHeight(it) },
-                shape = RoundedCornerShape(12.dp),
-                placeholder = "키를 입력해주세요",
-                textStyle = FestimateTheme.typography.bodyMedium13,
-                textColor = Gray04,
-                maxLength = 3,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.NumberPassword,
-                ),
-            )
-            Text(
-                text = "cm",
-                style = FestimateTheme.typography.bodySemibold17,
-                color = Gray06,
-                textAlign = TextAlign.Center,
-            )
-        }
-        Row(
+            modifier = Modifier.padding(top = 12.dp, bottom = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(

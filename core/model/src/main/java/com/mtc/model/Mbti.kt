@@ -1,4 +1,4 @@
-package com.mtc.signup
+package com.mtc.model
 
 enum class Mbti {
     Empty,

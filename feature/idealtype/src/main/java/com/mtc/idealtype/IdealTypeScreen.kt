@@ -1,4 +1,4 @@
-package com.mtc.signup
+package com.mtc.idealtype
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,40 +26,47 @@ import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray03
 import com.mtc.designsystem.theme.MainCoral
-import com.mtc.signup.SignUpPage.Companion.toSignupPager
+import com.mtc.idealtype.IdealTypePage.Companion.toIdealTypePager
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpRoute(
+fun IdealTypeRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    viewModel: SignUpViewModel = hiltViewModel(),
+    navigateAddMatching: (String, String, String, String, String, List<String>) -> Unit,
+    viewModel: IdealTypeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState) {
         viewModel.apply {
-            firstUserInfoScreenResultValidate()
-            secondUserInfoScreenResultValidate()
-            thirdUserInfoScreenResultValidate()
+            firstIdealTypeScreenResultValidate()
+            secondIdealTypeScreenResultValidate()
         }
     }
+
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
-                SignUpSideEffect.Empty -> {}
-                SignUpSideEffect.Error -> {}
-                SignUpSideEffect.Loading -> {}
-                SignUpSideEffect.Success -> navigateToHome()
+                IdealTypeSideEffect.Empty -> {}
+                IdealTypeSideEffect.Error -> {}
+                IdealTypeSideEffect.Loading -> {}
+                IdealTypeSideEffect.Success -> navigateAddMatching(
+                    uiState.minAge,
+                    uiState.maxAge,
+                    uiState.minHeight,
+                    uiState.maxHeight,
+                    uiState.mbti,
+                    uiState.appearanceList,
+                )
             }
         }
     }
 
-    SignUpScreen(
+    IdealTypeScreen(
         modifier = modifier,
         uiState = uiState,
         viewModel = viewModel,
@@ -68,18 +74,18 @@ fun SignUpRoute(
 }
 
 @Composable
-fun SignUpScreen(
+fun IdealTypeScreen(
     modifier: Modifier = Modifier,
-    uiState: SignUpState,
-    viewModel: SignUpViewModel,
+    uiState: IdealTypeState,
+    viewModel: IdealTypeViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
 
-    BackHandler(enabled = pagerState.currentPage == 1 || pagerState.currentPage == 2) {
+    BackHandler(enabled = pagerState.currentPage == 1) {
         coroutineScope.launch {
             when (pagerState.currentPage) {
-                1, 2 -> pagerState.animateScrollToPage(
+                1 -> pagerState.animateScrollToPage(
                     pagerState.currentPage - 1,
                 )
             }
@@ -95,12 +101,9 @@ fun SignUpScreen(
                 .align(Alignment.Start)
                 .padding(top = 50.dp)
                 .padding(horizontal = 16.dp)
-                .alpha(
-                    if (pagerState.currentPage == 1 || pagerState.currentPage == 2) 1f else 0f,
-                )
                 .customClickable(
                     rippleEnabled = false,
-                    onClick = if (pagerState.currentPage == 1 || pagerState.currentPage == 2) {
+                    onClick = if (pagerState.currentPage == 1) {
                         {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
@@ -119,25 +122,18 @@ fun SignUpScreen(
             userScrollEnabled = false,
             verticalAlignment = Alignment.Top,
         ) { page ->
-            when (page.toSignupPager()) {
-                SignUpPage.Error -> {}
-                SignUpPage.FirstUserInfo -> FirstUserInfoScreen(
+            when (page.toIdealTypePager()) {
+                IdealTypePage.Error -> {}
+                IdealTypePage.FirstIdealType -> FirstIdealTypeScreen(
                     uiState = uiState,
-                    updateName = viewModel::updateName,
-                    updateNickname = viewModel::updateNickName,
-                    checkNicknameDuplicate = viewModel::checkNickNameDuplicate,
-                    updateAge = viewModel::updateAge,
-                    updateGender = viewModel::updateGender,
-                    updateSchool = viewModel::updateSchool,
-                )
-
-                SignUpPage.SecondUserInfo -> SecondUserInfoScreen(
-                    uiState = uiState,
-                    updateHeight = viewModel::updateHeight,
+                    updateMinAge = viewModel::updateMinAge,
+                    updateMaxAge = viewModel::updateMaxAge,
+                    updateMinHeight = viewModel::updateMinHeight,
+                    updateMaxHeight = viewModel::updateMaxHeight,
                     updateMbti = viewModel::updateMbti,
                 )
 
-                SignUpPage.ThirdUserInfo -> ThirdUserInfoScreen(
+                IdealTypePage.SecondIdealType -> SecondIdealTypeScreen(
                     uiState = uiState,
                     updateAppearance = viewModel::updateAppearance,
                 )
@@ -152,24 +148,22 @@ fun SignUpScreen(
             text = "다음",
             textStyle = FestimateTheme.typography.bodySemibold17,
             clickable = when (pagerState.currentPage) {
-                0 -> uiState.firstUserInfoScreenResult
-                1 -> uiState.secondUserInfoScreenResult
-                2 -> uiState.thirdUserInfoScreenResult
+                0 -> uiState.firstIdealTypeScreenResult
+                1 -> uiState.secondIdealTypeScreenResult
                 else -> false
             },
             backgroundColor = when (pagerState.currentPage) {
-                0 -> if (uiState.firstUserInfoScreenResult) MainCoral else Gray03
-                1 -> if (uiState.secondUserInfoScreenResult) MainCoral else Gray03
-                2 -> if (uiState.thirdUserInfoScreenResult) MainCoral else Gray03
+                0 -> if (uiState.firstIdealTypeScreenResult) MainCoral else Gray03
+                1 -> if (uiState.secondIdealTypeScreenResult) MainCoral else Gray03
                 else -> Gray03
             },
             onClick = {
-                if (pagerState.currentPage == 0 || pagerState.currentPage == 1) {
+                if (pagerState.currentPage == 0) {
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
                 } else {
-                    viewModel.signUp()
+                    viewModel.updateIdealTypeResult()
                 }
             },
             padding = PaddingValues(horizontal = 156.dp, vertical = 17.dp),

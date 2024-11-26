@@ -1,83 +1,44 @@
-package com.mtc.signup
+package com.mtc.idealtype
 
-import android.util.Log
 import com.mtc.model.Appearance
 import com.mtc.model.Appearance.Companion.toModel
 import com.mtc.model.Mbti
 import com.mtc.model.Mbti.Companion.toModel
-import com.mtc.model.NicknameValidateResult
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState()) {
+class IdealTypeViewModel @Inject constructor() : BaseViewModel<IdealTypeState, IdealTypeSideEffect>(IdealTypeState()) {
 
-    fun updateName(name: String) {
+    fun updateMinAge(minAge: String) {
         intent {
             copy(
-                username = name,
+                minAge = minAge,
             )
         }
     }
 
-    fun updateNickName(nickname: String) {
+    fun updateMaxAge(maxAge: String) {
         intent {
             copy(
-                nickname = nickname,
-                nicknameValidateResult = checkNicknameValidate(nickname),
-                firstUserInfoScreenResult = false,
+                maxAge = maxAge,
             )
         }
     }
 
-    fun checkNickNameDuplicate() {
-        if (uiState.value.nickname != "아아") {
-            intent {
-                Log.d("asdasd", "not duplicate")
-                copy(
-                    nicknameValidateResult = NicknameValidateResult.Success,
-                )
-            }
-        }
-    }
-
-    fun updateAge(age: String) {
+    fun updateMinHeight(minHeight: String) {
         intent {
             copy(
-                age = age,
+                minHeight = minHeight,
             )
         }
     }
 
-    fun updateGender(gender: SelectedGender) {
-        if (gender != uiState.value.selectedGender) {
-            intent {
-                copy(
-                    selectedGender = gender,
-                )
-            }
-        } else if (gender == uiState.value.selectedGender) {
-            intent {
-                copy(
-                    selectedGender = SelectedGender.Empty,
-                )
-            }
-        }
-    }
-
-    fun updateSchool(school: String) {
+    fun updateMaxHeight(maxHeight: String) {
         intent {
             copy(
-                school = school,
-            )
-        }
-    }
-
-    fun updateHeight(height: String) {
-        intent {
-            copy(
-                height = height,
+                maxHeight = maxHeight,
             )
         }
     }
@@ -197,23 +158,22 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
                 }
             }
         }
-    }
 
-    fun firstUserInfoScreenResultValidate() {
-        if (uiState.value.username.isNotBlank() && uiState.value.nicknameValidateResult == NicknameValidateResult.Success &&
-            uiState.value.age.isNotBlank() && uiState.value.selectedGender != SelectedGender.Empty && uiState.value.school.isNotBlank()
-        ) {
-            intent {
-                copy(
-                    firstUserInfoScreenResult = true,
-                )
-            }
+        val apperanceList = mutableListOf<String>()
+        apperanceList.add(uiState.value.firstAppearance.toModel()!!)
+        if (uiState.value.secondAppearance.toModel()?.isNotBlank() == true) {
+            apperanceList.add(uiState.value.secondAppearance.toModel()!!)
+        }
+        intent {
+            copy(
+                appearanceList = apperanceList,
+            )
         }
     }
 
-    fun secondUserInfoScreenResultValidate() {
-        if (uiState.value.height.isNotBlank() &&
-            uiState.value.m.toModel()?.isNotBlank() == true &&
+    fun firstIdealTypeScreenResultValidate() {
+        if (uiState.value.minAge.isNotBlank() && uiState.value.maxAge.isNotBlank() && uiState.value.minHeight.isNotBlank() &&
+            uiState.value.maxHeight.isNotBlank() && uiState.value.m.toModel()?.isNotBlank() == true &&
             uiState.value.b.toModel()?.isNotBlank() == true &&
             uiState.value.t.toModel()?.isNotBlank() == true &&
             uiState.value.i.toModel()?.isNotBlank() == true
@@ -223,7 +183,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
                     mbti = uiState.value.run {
                         m.toModel() + b.toModel() + t.toModel() + i.toModel()
                     },
-                    secondUserInfoScreenResult = true,
+                    firstIdealTypeScreenResult = true,
                 )
             }
         } else {
@@ -232,40 +192,31 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
                     mbti = uiState.value.run {
                         m.toModel() + b.toModel() + t.toModel() + i.toModel()
                     },
-                    secondUserInfoScreenResult = false,
+                    firstIdealTypeScreenResult = false,
                 )
             }
         }
     }
 
-    fun thirdUserInfoScreenResultValidate() {
+    fun secondIdealTypeScreenResultValidate() {
         if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true) {
             intent {
                 copy(
-                    thirdUserInfoScreenResult = true,
+                    secondIdealTypeScreenResult = true,
                 )
             }
         } else {
             intent {
                 copy(
-                    thirdUserInfoScreenResult = false,
+                    secondIdealTypeScreenResult = false,
                 )
             }
         }
     }
 
-    fun signUp() {
+    fun updateIdealTypeResult() {
         postSideEffect(
-            SignUpSideEffect.Success,
+            IdealTypeSideEffect.Success,
         )
-    }
-
-    private fun checkNicknameValidate(nickname: String): NicknameValidateResult {
-        return when {
-            nickname.isEmpty() || nickname.length == 1 -> NicknameValidateResult.Empty
-            nickname.all { it !in '가'..'힣' } -> NicknameValidateResult.KoreanError
-            nickname.length !in 1..10 -> NicknameValidateResult.LengthError
-            else -> NicknameValidateResult.CorrectInput
-        }
     }
 }

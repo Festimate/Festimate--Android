@@ -2,17 +2,17 @@ package com.mtc.signup
 
 enum class SignUpPage {
     Error,
-    Name,
-    Height,
-    Appearance,
+    FirstUserInfo,
+    SecondUserInfo,
+    ThirdUserInfo,
     ;
 
     companion object {
         fun Int.toSignupPager(): SignUpPage {
             when (this) {
-                0 -> return Name
-                1 -> return Height
-                2 -> return Appearance
+                0 -> return FirstUserInfo
+                1 -> return SecondUserInfo
+                2 -> return ThirdUserInfo
             }
             return Error
         }

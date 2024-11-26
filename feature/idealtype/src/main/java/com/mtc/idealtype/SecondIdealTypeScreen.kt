@@ -1,4 +1,4 @@
-package com.mtc.signup
+package com.mtc.idealtype
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,9 +29,9 @@ import com.mtc.model.Appearance
 import com.mtc.model.Appearance.Companion.toAppearance
 
 @Composable
-fun ThirdUserInfoScreen(
+fun SecondIdealTypeScreen(
     modifier: Modifier = Modifier,
-    uiState: SignUpState,
+    uiState: IdealTypeState,
     updateAppearance: (Appearance) -> Unit,
 ) {
     val appearance = listOf(
@@ -52,8 +52,8 @@ fun ThirdUserInfoScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         FestimateTopAppBar(
-            signupPageNumber = "3",
-            signupPageContent = "내 얼굴상은?",
+            signupPageNumber = "2",
+            signupPageContent = "이상형인 얼굴상은?",
         )
         Row(
             modifier = modifier.padding(bottom = 30.dp),
