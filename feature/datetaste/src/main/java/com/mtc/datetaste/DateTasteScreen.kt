@@ -234,7 +234,15 @@ fun DateTasteScreen(
                     4 -> ""
                     else -> ""
                 },
-                onButtonClick = {},
+                onButtonClick =
+                when (pagerState.currentPage) {
+                    0 -> viewModel::updateFirstDateTasteQuestion
+                    1 -> viewModel::updateSecondDateTasteQuestion
+                    2 -> viewModel::updateThirdDateTasteQuestion
+                    3 -> viewModel::updateFourthDateTasteQuestion
+                    4 -> viewModel::updateFifthDateTasteQuestion
+                    else -> viewModel::updateFirstDateTasteQuestion
+                },
             )
         }
         FestimateBasicButton(
@@ -245,8 +253,22 @@ fun DateTasteScreen(
             shape = RoundedCornerShape(10.dp),
             text = if (pagerState.currentPage == 4) "완료" else "다음",
             textStyle = FestimateTheme.typography.bodySemibold17,
-            clickable = true,
-            backgroundColor = Gray03,
+            clickable = when (pagerState.currentPage) {
+                0 -> uiState.firstQuestion != 0
+                1 -> uiState.secondQuestion != 0
+                2 -> uiState.thirdQuestion != 0
+                3 -> uiState.fourthQuestion != 0
+                4 -> uiState.fifthQuestion != 0
+                else -> false
+            },
+            backgroundColor = when (pagerState.currentPage) {
+                0 -> if (uiState.firstQuestion != 0) MainCoral else Gray03
+                1 -> if (uiState.secondQuestion != 0) MainCoral else Gray03
+                2 -> if (uiState.thirdQuestion != 0) MainCoral else Gray03
+                3 -> if (uiState.fourthQuestion != 0) MainCoral else Gray03
+                4 -> if (uiState.fifthQuestion != 0) MainCoral else Gray03
+                else -> Gray03
+            },
             onClick = {
                 if (pagerState.currentPage != 4) {
                     coroutineScope.launch {

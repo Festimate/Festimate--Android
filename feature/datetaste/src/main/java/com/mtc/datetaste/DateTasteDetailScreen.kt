@@ -32,8 +32,16 @@ fun DateTasteDetailScreen(
     firstText: String,
     secondText: String,
     thirdText: String = "",
-    onButtonClick: () -> Unit,
+    onButtonClick: (Int) -> Unit,
 ) {
+    val currentState = when (pagerState.currentPage) {
+        0 -> uiState.firstQuestion
+        1 -> uiState.secondQuestion
+        2 -> uiState.thirdQuestion
+        3 -> uiState.fourthQuestion
+        4 -> uiState.fifthQuestion
+        else -> 0
+    }
     Column(
         modifier = modifier
             .padding(horizontal = 16.dp)
@@ -42,21 +50,21 @@ fun DateTasteDetailScreen(
     ) {
         DateTasteBox(
             title = firstText,
-            success = true,
-            onClick = onButtonClick,
+            success = currentState == 1,
+            onClick = { onButtonClick(1) },
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         DateTasteBox(
             title = secondText,
-            success = true,
-            onClick = onButtonClick,
+            success = currentState == 2,
+            onClick = { onButtonClick(2) },
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         if (pagerState.currentPage == 1 || pagerState.currentPage == 3) {
             DateTasteBox(
                 title = thirdText,
-                success = false,
-                onClick = onButtonClick,
+                success = currentState == 3,
+                onClick = { onButtonClick(3) },
             )
         }
     }
