@@ -85,21 +85,42 @@ internal class MainNavigator(
         navController.popBackStack()
     }
 
-    fun setIdealTypeSavedStateHandle() {
-        navController.previousBackStackEntry?.savedStateHandle?.set("idealType", "")
+    fun setIdealTypeSavedStateHandle(
+        minAge: String,
+        maxAge: String,
+        minHeight: String,
+        maxHeight: String,
+        mbti: String,
+        appearanceList: List<String>,
+    ) {
+        val idealTypeList = listOf(
+            minAge,
+            maxAge,
+            minHeight,
+            maxHeight,
+            mbti,
+            appearanceList,
+        )
+        navController.previousBackStackEntry?.savedStateHandle?.set(IDEAL_TYPE, idealTypeList)
     }
+
     fun setDateTasteSavedStateHandle(dateTasteList: List<Int>) {
-        navController.previousBackStackEntry?.savedStateHandle?.set("dateTaste", dateTasteList)
+        navController.previousBackStackEntry?.savedStateHandle?.set(DATE_TASTE, dateTasteList)
     }
 
     fun getIdealTypeSavedStateHandle() =
-        navController.currentBackStackEntry?.savedStateHandle?.get<>("idealType")
+        navController.currentBackStackEntry?.savedStateHandle?.get<List<Any>>(IDEAL_TYPE)
 
     fun getDateTasteSavedStateHandle() =
-        navController.currentBackStackEntry?.savedStateHandle?.get<List<Int>>("dateTaste")
+        navController.currentBackStackEntry?.savedStateHandle?.get<List<Int>>(DATE_TASTE)
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean {
         return navController.currentDestination?.hasRoute<T>() == true
+    }
+
+    companion object {
+        const val IDEAL_TYPE = "idealType"
+        const val DATE_TASTE = "dateTaste"
     }
 }
 

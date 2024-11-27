@@ -43,12 +43,14 @@ fun AddMatchingRoute(
     navigateHome: () -> Unit,
     idealTypeInfo: IdealTypeInfo,
     getDateTasteSavedStateHandle: () -> List<Int>?,
+    getIdealTypeSavedStateHandle: () -> List<Any>?,
     viewModel: AddMatchingViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         Log.d("dateTaste", getDateTasteSavedStateHandle().toString())
+        Log.d("dateTaste->ideal", getIdealTypeSavedStateHandle().toString())
     }
     LaunchedEffect(idealTypeInfo) {
         viewModel.updateIdealTypeInfo(idealTypeInfo)

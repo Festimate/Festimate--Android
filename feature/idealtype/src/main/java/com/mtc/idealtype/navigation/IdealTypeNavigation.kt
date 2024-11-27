@@ -17,13 +17,15 @@ fun NavController.navigateIdealType(navOptions: NavOptions) {
 fun NavGraphBuilder.idealTypeNavGraph(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateToAddMatching: (String, String, String, String, String, List<String>) -> Unit,
+    navigateToBack: () -> Unit,
+    setIdealTypeSavedStateHandle: (String, String, String, String, String, List<String>) -> Unit,
 ) {
     composable<IdealType> {
         IdealTypeRoute(
             padding = padding,
             modifier = modifier,
-            navigateAddMatching = navigateToAddMatching,
+            navigateToBack = navigateToBack,
+            setIdealTypeSavedStateHandle = setIdealTypeSavedStateHandle,
         )
     }
 }

@@ -32,7 +32,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mtc.designsystem.R
 import com.mtc.designsystem.component.FestimateBasicButton
@@ -51,7 +50,6 @@ import kotlinx.coroutines.launch
 fun DateTasteRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateAddMatching: () -> Unit,
     navigateToBack: () -> Unit,
     setDateTasteSavedStateHandle: (List<Int>) -> Unit,
     viewModel: DateTasteViewModel = hiltViewModel(),
