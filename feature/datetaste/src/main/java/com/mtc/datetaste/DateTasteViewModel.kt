@@ -83,6 +83,30 @@ class DateTasteViewModel @Inject constructor(
             }
     }
 
+    fun dateTasteScreenValidate() {
+        if (uiState.value.firstQuestion != 0 && uiState.value.secondQuestion != 0 && uiState.value.thirdQuestion != 0 &&
+            uiState.value.fourthQuestion != 0 && uiState.value.fifthQuestion != 0
+        ) {
+            intent {
+                copy(
+                    dateTasteList = listOf(
+                        uiState.value.firstQuestion,
+                        uiState.value.secondQuestion,
+                        uiState.value.thirdQuestion,
+                        uiState.value.fourthQuestion,
+                        uiState.value.fifthQuestion,
+                    ),
+                    dateTasteScreenResult = true,
+                )
+            }
+        } else intent {
+            copy(
+                dateTasteScreenResult = false,
+            )
+        }
+
+    }
+
     fun updateDateTasteResult() {
         postSideEffect(
             DateTasteSideEffect.Success,

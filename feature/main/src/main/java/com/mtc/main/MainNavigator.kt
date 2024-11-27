@@ -81,6 +81,23 @@ internal class MainNavigator(
         navController.navigate(DateTaste)
     }
 
+    fun navigateBack() {
+        navController.popBackStack()
+    }
+
+    fun setIdealTypeSavedStateHandle() {
+        navController.previousBackStackEntry?.savedStateHandle?.set("idealType", "")
+    }
+    fun setDateTasteSavedStateHandle(dateTasteList: List<Int>) {
+        navController.previousBackStackEntry?.savedStateHandle?.set("dateTaste", dateTasteList)
+    }
+
+    fun getIdealTypeSavedStateHandle() =
+        navController.currentBackStackEntry?.savedStateHandle?.get<>("idealType")
+
+    fun getDateTasteSavedStateHandle() =
+        navController.currentBackStackEntry?.savedStateHandle?.get<List<Int>>("dateTaste")
+
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean {
         return navController.currentDestination?.hasRoute<T>() == true
     }

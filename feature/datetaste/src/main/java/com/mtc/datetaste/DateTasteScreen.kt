@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mtc.designsystem.R
 import com.mtc.designsystem.component.FestimateBasicButton
@@ -51,13 +52,15 @@ fun DateTasteRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
     navigateAddMatching: () -> Unit,
+    navigateToBack: () -> Unit,
+    setDateTasteSavedStateHandle: (List<Int>) -> Unit,
     viewModel: DateTasteViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState) {
         viewModel.apply {
-
+            dateTasteScreenValidate()
         }
     }
 
@@ -67,7 +70,10 @@ fun DateTasteRoute(
                 DateTasteSideEffect.Empty -> {}
                 DateTasteSideEffect.Error -> {}
                 DateTasteSideEffect.Loading -> {}
-                DateTasteSideEffect.Success -> navigateAddMatching()
+                DateTasteSideEffect.Success -> {
+                    setDateTasteSavedStateHandle(uiState.dateTasteList)
+                    navigateToBack()
+                }
             }
         }
     }
@@ -258,7 +264,7 @@ fun DateTasteScreen(
                 1 -> uiState.secondQuestion != 0
                 2 -> uiState.thirdQuestion != 0
                 3 -> uiState.fourthQuestion != 0
-                4 -> uiState.fifthQuestion != 0
+                4 -> uiState.dateTasteScreenResult
                 else -> false
             },
             backgroundColor = when (pagerState.currentPage) {

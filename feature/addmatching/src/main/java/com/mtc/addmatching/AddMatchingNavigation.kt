@@ -2,6 +2,7 @@ package com.mtc.addmatching
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -21,6 +22,7 @@ fun NavGraphBuilder.addMatchingGraph(
     navigateToIdealType: () -> Unit,
     navigateToDateTaste: () -> Unit,
     navigateToHome: () -> Unit,
+    getDateTasteSavedStateHandle: () -> List<Int>?,
 ) {
     composable<AddMatching> { backEntryState ->
         val idealTypeInfo = IdealTypeInfo(
@@ -38,7 +40,8 @@ fun NavGraphBuilder.addMatchingGraph(
             navigateDateTaste = navigateToDateTaste,
             navigateHome = navigateToHome,
             idealTypeInfo = idealTypeInfo,
-        )
+            getDateTasteSavedStateHandle = getDateTasteSavedStateHandle,
+            )
     }
 }
 

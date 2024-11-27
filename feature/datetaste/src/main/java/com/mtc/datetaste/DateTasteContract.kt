@@ -9,7 +9,8 @@ data class DateTasteState(
     val thirdQuestion: Int = 0,
     val fourthQuestion: Int = 0,
     val fifthQuestion: Int = 0,
-    val dateTasteList: List<String> = emptyList(),
+    val dateTasteList: List<Int> = emptyList(),
+    val dateTasteScreenResult: Boolean = false,
 ) : UiState
 
 sealed interface DateTasteSideEffect : SideEffect {

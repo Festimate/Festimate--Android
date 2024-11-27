@@ -1,5 +1,6 @@
 package com.mtc.addmatching
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -41,10 +42,14 @@ fun AddMatchingRoute(
     navigateDateTaste: () -> Unit,
     navigateHome: () -> Unit,
     idealTypeInfo: IdealTypeInfo,
+    getDateTasteSavedStateHandle: () -> List<Int>?,
     viewModel: AddMatchingViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        Log.d("dateTaste", getDateTasteSavedStateHandle().toString())
+    }
     LaunchedEffect(idealTypeInfo) {
         viewModel.updateIdealTypeInfo(idealTypeInfo)
     }

@@ -47,7 +47,8 @@ internal fun MainScreen(
                     navigateToIdealType = navigator::navigateToIdealType,
                     navigateToDateTaste = navigator::navigateToDateTaste,
                     navigateToHome = navigator::navigateToHome,
-                )
+                    getDateTasteSavedStateHandle = navigator::getDateTasteSavedStateHandle,
+                    )
                 idealTypeNavGraph(
                     padding = innerPadding,
                     navigateToAddMatching = navigator::navigateToAddMatching,
@@ -55,7 +56,9 @@ internal fun MainScreen(
                 dateTasteNavGraph(
                     padding = innerPadding,
                     navigateToAddMatching = navigator::navigateToAddMatching,
-                )
+                    navigateToBack = navigator::navigateBack,
+                    setDateTasteSavedStateHandle = navigator::setDateTasteSavedStateHandle,
+                    )
             }
         },
     )
