@@ -26,7 +26,7 @@ import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray03
 import com.mtc.designsystem.theme.MainCoral
-import com.mtc.idealtype.IdealTypePage.Companion.toIdealTypePager
+import com.mtc.idealtype.IdealTypePage.Companion.toIdealTypePage
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -122,7 +122,7 @@ fun IdealTypeScreen(
             userScrollEnabled = false,
             verticalAlignment = Alignment.Top,
         ) { page ->
-            when (page.toIdealTypePager()) {
+            when (page.toIdealTypePage()) {
                 IdealTypePage.Error -> {}
                 IdealTypePage.FirstIdealType -> FirstIdealTypeScreen(
                     uiState = uiState,

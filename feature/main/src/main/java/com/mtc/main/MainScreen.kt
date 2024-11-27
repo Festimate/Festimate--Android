@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mtc.addmatching.addMatchingGraph
-import com.mtc.datetaste.dateTasteNavGraph
+import com.mtc.datetaste.navigation.dateTasteNavGraph
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.home.homeNavGraph
-import com.mtc.idealtype.idealTypeNavGraph
+import com.mtc.idealtype.navigation.idealTypeNavGraph
 import com.mtc.login.navigation.loginNavGraph
 
 @Composable

@@ -8,9 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mtc.addmatching.AddMatching
-import com.mtc.datetaste.DateTaste
+import com.mtc.datetaste.navigation.DateTaste
 import com.mtc.home.Home
-import com.mtc.idealtype.IdealType
+import com.mtc.idealtype.navigation.IdealType
 import com.mtc.login.navigation.Login
 import com.mtc.login.navigation.SignUp
 import com.mtc.navigation.Route

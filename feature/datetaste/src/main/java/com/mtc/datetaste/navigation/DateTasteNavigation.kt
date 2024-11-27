@@ -1,4 +1,4 @@
-package com.mtc.datetaste
+package com.mtc.datetaste.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.mtc.datetaste.DateTasteRoute
 import com.mtc.navigation.Route
 import kotlinx.serialization.Serializable
 
