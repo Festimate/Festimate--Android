@@ -1,6 +1,5 @@
 package com.mtc.addmatching
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,8 +26,8 @@ import com.mtc.addmatching.AddMatchingPage.Companion.toAddMatching
 import com.mtc.designsystem.R
 import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
+import com.mtc.designsystem.theme.Gray03
 import com.mtc.designsystem.theme.MainCoral
-import com.mtc.model.IdealTypeInfo
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -41,23 +40,22 @@ fun AddMatchingRoute(
     navigateIdealType: () -> Unit,
     navigateDateTaste: () -> Unit,
     navigateHome: () -> Unit,
-    idealTypeInfo: IdealTypeInfo,
+    navigateToBack: () -> Unit,
     getDateTasteSavedStateHandle: () -> List<Int>?,
-    getIdealTypeSavedStateHandle: () -> List<Any>?,
+    getIdealTypeSavedStateHandle: () -> String?,
     viewModel: AddMatchingViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        Log.d("dateTaste", getDateTasteSavedStateHandle().toString())
-        Log.d("dateTaste->ideal", getIdealTypeSavedStateHandle().toString())
+        viewModel.updateIdealTypeInfo(getIdealTypeSavedStateHandle())
+        viewModel.updateDateTasteInfo(getDateTasteSavedStateHandle())
     }
-    LaunchedEffect(idealTypeInfo) {
-        viewModel.updateIdealTypeInfo(idealTypeInfo)
-    }
+
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
+                AddMatchingSideEffect.Back -> navigateToBack()
                 AddMatchingSideEffect.Empty -> {}
                 AddMatchingSideEffect.Error -> {}
                 AddMatchingSideEffect.Loading -> {}
@@ -120,7 +118,9 @@ fun AddMatchingScreen(
                                 }
                             }
                         } else {
-                            null
+                            {
+                                viewModel.updateAddMatchingResultBack()
+                            }
                         },
                     ),
                 painter = painterResource(id = R.drawable.ic_back),
@@ -159,13 +159,37 @@ fun AddMatchingScreen(
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
-                text = "다음",
-                textStyle = FestimateTheme.typography.bodySemibold17,
-                clickable = true,
-                backgroundColor = MainCoral,
-                onClick = {
+                text = when (pagerState.currentPage) {
+                    0 -> "매칭하러 가기"
+                    1, 2 -> "다음"
+                    3 -> "홈 화면으로 돌아가기"
+                    else -> ""
                 },
-                padding = PaddingValues(horizontal = 156.dp, vertical = 17.dp),
+                textStyle = FestimateTheme.typography.bodySemibold17,
+                clickable = when (pagerState.currentPage) {
+                    0 -> uiState.idealTypeResult && uiState.dateTasteResult
+                    1 -> true
+                    2 -> true
+                    3 -> true
+                    else -> false
+                },
+                backgroundColor = when (pagerState.currentPage) {
+                    0 -> if (uiState.idealTypeResult && uiState.dateTasteResult) MainCoral else Gray03
+                    1 -> Gray03
+                    2 -> Gray03
+                    3 -> Gray03
+                    else -> Gray03
+                },
+                onClick = {
+                    if (pagerState.currentPage != 3) {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        }
+                    } else {
+                        viewModel.addNewMatching()
+                    }
+                },
+                padding = PaddingValues(horizontal = 126.dp, vertical = 17.dp),
             )
         }
     }

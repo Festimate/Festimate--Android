@@ -6,8 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
-import com.mtc.model.IdealTypeInfo
 import com.mtc.navigation.Route
 import kotlinx.serialization.Serializable
 
@@ -21,25 +19,18 @@ fun NavGraphBuilder.addMatchingGraph(
     navigateToIdealType: () -> Unit,
     navigateToDateTaste: () -> Unit,
     navigateToHome: () -> Unit,
+    navigateToBack: () -> Unit,
     getDateTasteSavedStateHandle: () -> List<Int>?,
-    getIdealTypeSavedStateHandle: () -> List<Any>?,
+    getIdealTypeSavedStateHandle: () -> String?,
 ) {
-    composable<AddMatching> { backEntryState ->
-        val idealTypeInfo = IdealTypeInfo(
-            minAge = backEntryState.toRoute<AddMatching>().minAge,
-            maxAge = backEntryState.toRoute<AddMatching>().maxAge,
-            minHeight = backEntryState.toRoute<AddMatching>().minHeight,
-            maxHeight = backEntryState.toRoute<AddMatching>().maxHeight,
-            mbti = backEntryState.toRoute<AddMatching>().mbti,
-            apperanceList = backEntryState.toRoute<AddMatching>().apperanceList,
-        )
+    composable<AddMatching> {
         AddMatchingRoute(
             padding = padding,
             modifier = modifier,
             navigateIdealType = navigateToIdealType,
             navigateDateTaste = navigateToDateTaste,
             navigateHome = navigateToHome,
-            idealTypeInfo = idealTypeInfo,
+            navigateToBack = navigateToBack,
             getDateTasteSavedStateHandle = getDateTasteSavedStateHandle,
             getIdealTypeSavedStateHandle = getIdealTypeSavedStateHandle,
         )
@@ -47,11 +38,4 @@ fun NavGraphBuilder.addMatchingGraph(
 }
 
 @Serializable
-data class AddMatching(
-    val minAge: String?,
-    val maxAge: String?,
-    val minHeight: String?,
-    val maxHeight: String?,
-    val mbti: String?,
-    val apperanceList: List<String>?,
-) : Route
+data object AddMatching : Route

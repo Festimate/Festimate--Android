@@ -14,6 +14,7 @@ data class DateTasteState(
 ) : UiState
 
 sealed interface DateTasteSideEffect : SideEffect {
+    data object Back : DateTasteSideEffect
     data object Empty : DateTasteSideEffect
     data object Error : DateTasteSideEffect
     data object Loading : DateTasteSideEffect

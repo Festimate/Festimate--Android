@@ -117,4 +117,10 @@ class DateTasteViewModel @Inject constructor() : BaseViewModel<DateTasteState, D
             DateTasteSideEffect.Success,
         )
     }
+
+    fun updateDateTasteResultBack() {
+        postSideEffect(
+            DateTasteSideEffect.Back,
+        )
+    }
 }

@@ -47,6 +47,7 @@ internal fun MainScreen(
                     navigateToIdealType = navigator::navigateToIdealType,
                     navigateToDateTaste = navigator::navigateToDateTaste,
                     navigateToHome = navigator::navigateToHome,
+                    navigateToBack = navigator::navigateBack,
                     getDateTasteSavedStateHandle = navigator::getDateTasteSavedStateHandle,
                     getIdealTypeSavedStateHandle = navigator::getIdealTypeSavedStateHandle,
                 )

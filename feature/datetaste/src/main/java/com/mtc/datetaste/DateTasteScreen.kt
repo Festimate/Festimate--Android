@@ -65,6 +65,7 @@ fun DateTasteRoute(
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
+                DateTasteSideEffect.Back -> navigateToBack()
                 DateTasteSideEffect.Empty -> {}
                 DateTasteSideEffect.Error -> {}
                 DateTasteSideEffect.Loading -> {}
@@ -139,7 +140,9 @@ fun DateTasteScreen(
                             }
                         }
                     } else {
-                        null
+                        {
+                            viewModel.updateDateTasteResultBack()
+                        }
                     },
                 ),
             painter = painterResource(id = R.drawable.ic_back),

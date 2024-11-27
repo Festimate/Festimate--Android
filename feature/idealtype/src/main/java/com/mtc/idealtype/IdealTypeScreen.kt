@@ -52,6 +52,7 @@ fun IdealTypeRoute(
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
+                IdealTypeSideEffect.Back -> navigateToBack()
                 IdealTypeSideEffect.Empty -> {}
                 IdealTypeSideEffect.Error -> {}
                 IdealTypeSideEffect.Loading -> {}
@@ -114,7 +115,9 @@ fun IdealTypeScreen(
                             }
                         }
                     } else {
-                        null
+                        {
+                            viewModel.updateIdealTypeResultBack()
+                        }
                     },
                 ),
             painter = painterResource(id = R.drawable.ic_back),

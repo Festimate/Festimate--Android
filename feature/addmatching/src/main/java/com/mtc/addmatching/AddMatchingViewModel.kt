@@ -3,6 +3,7 @@ package com.mtc.addmatching
 import com.mtc.model.IdealTypeInfo
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,24 +21,21 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
         )
     }
 
-    fun updateIdealTypeInfo(idealTypeInfo: IdealTypeInfo) {
-        if (idealTypeInfo.minAge?.isNotBlank() == true &&
-            idealTypeInfo.maxAge?.isNotBlank() == true &&
-            idealTypeInfo.minHeight?.isNotBlank() == true &&
-            idealTypeInfo.maxHeight?.isNotBlank() == true &&
-            idealTypeInfo.mbti?.isNotBlank() == true &&
-            idealTypeInfo.apperanceList?.isNotEmpty() == true
-        ) {
-            intent {
-                copy(
-                    minAge = idealTypeInfo.minAge!!,
-                    maxAge = idealTypeInfo.maxAge!!,
-                    minHeight = idealTypeInfo.minHeight!!,
-                    maxHeight = idealTypeInfo.maxHeight!!,
-                    mbti = idealTypeInfo.mbti!!,
-                    appearanceList = idealTypeInfo.apperanceList!!,
-                    idealTypeResult = true,
-                )
+    fun updateIdealTypeInfo(encodeIdealTypeList: String?) {
+        if (!encodeIdealTypeList.isNullOrBlank()) {
+            val idealTypeList = Json.decodeFromString<IdealTypeInfo>(encodeIdealTypeList)
+            idealTypeList.let {
+                intent {
+                    copy(
+                        minAge = it.minAge,
+                        maxAge = it.maxAge,
+                        minHeight = it.minHeight,
+                        maxHeight = it.maxHeight,
+                        mbti = it.mbti,
+                        appearanceList = it.apperanceList,
+                        idealTypeResult = true,
+                    )
+                }
             }
         } else {
             intent {
@@ -48,9 +46,32 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
         }
     }
 
+    fun updateDateTasteInfo(dateTasteList: List<Int>?) {
+        if (dateTasteList != null) {
+            intent {
+                copy(
+                    questionList = dateTasteList,
+                    dateTasteResult = true,
+                )
+            }
+        } else {
+            intent {
+                copy(
+                    dateTasteResult = false,
+                )
+            }
+        }
+    }
+
     fun addNewMatching() {
         postSideEffect(
             AddMatchingSideEffect.Success,
+        )
+    }
+
+    fun updateAddMatchingResultBack() {
+        postSideEffect(
+            AddMatchingSideEffect.Back,
         )
     }
 }

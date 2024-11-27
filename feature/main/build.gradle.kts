@@ -12,4 +12,5 @@ dependencies {
     implementation(projects.feature.addmatching)
     implementation(projects.feature.idealtype)
     implementation(projects.feature.datetaste)
+    implementation(libs.kotlinx.serialization.json)
 }
