@@ -8,12 +8,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mtc.addmatching.AddMatching
-import com.mtc.datetaste.DateTaste
+import com.mtc.datetaste.navigation.DateTaste
 import com.mtc.home.Home
-import com.mtc.idealtype.IdealType
+import com.mtc.idealtype.navigation.IdealType
 import com.mtc.login.navigation.Login
 import com.mtc.login.navigation.SignUp
+import com.mtc.model.IdealTypeInfo
 import com.mtc.navigation.Route
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 internal class MainNavigator(
     val navController: NavHostController,
@@ -49,24 +52,8 @@ internal class MainNavigator(
         }
     }
 
-    fun navigateToAddMatching(
-        minAge: String? = null,
-        maxAge: String? = null,
-        minHeight: String? = null,
-        maxHeight: String? = null,
-        mbti: String? = null,
-        appearanceList: List<String>? = null,
-    ) {
-        navController.navigate(
-            AddMatching(
-                minAge = minAge,
-                maxAge = maxAge,
-                minHeight = minHeight,
-                maxHeight = maxHeight,
-                mbti = mbti,
-                apperanceList = appearanceList,
-            ),
-        ) {
+    fun navigateToAddMatching() {
+        navController.navigate(AddMatching) {
             popUpTo(Home) {
                 inclusive = false
             }
@@ -81,8 +68,48 @@ internal class MainNavigator(
         navController.navigate(DateTaste)
     }
 
+    fun navigateBack() {
+        navController.popBackStack()
+    }
+
+    fun setIdealTypeSavedStateHandle(
+        minAge: String,
+        maxAge: String,
+        minHeight: String,
+        maxHeight: String,
+        mbti: String,
+        appearanceList: List<String>,
+    ) {
+        val idealTypeList = Json.encodeToString(
+            IdealTypeInfo(
+                minAge,
+                maxAge,
+                minHeight,
+                maxHeight,
+                mbti,
+                appearanceList,
+            ),
+        )
+        navController.previousBackStackEntry?.savedStateHandle?.set(IDEAL_TYPE, idealTypeList)
+    }
+
+    fun setDateTasteSavedStateHandle(dateTasteList: List<Int>) {
+        navController.previousBackStackEntry?.savedStateHandle?.set(DATE_TASTE, dateTasteList)
+    }
+
+    fun getIdealTypeSavedStateHandle() =
+        navController.currentBackStackEntry?.savedStateHandle?.get<String>(IDEAL_TYPE)
+
+    fun getDateTasteSavedStateHandle() =
+        navController.currentBackStackEntry?.savedStateHandle?.get<List<Int>>(DATE_TASTE)
+
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean {
         return navController.currentDestination?.hasRoute<T>() == true
+    }
+
+    companion object {
+        const val IDEAL_TYPE = "idealType"
+        const val DATE_TASTE = "dateTaste"
     }
 }
 

@@ -23,6 +23,7 @@ data class IdealTypeState(
 ) : UiState
 
 sealed interface IdealTypeSideEffect : SideEffect {
+    data object Back : IdealTypeSideEffect
     data object Empty : IdealTypeSideEffect
     data object Error : IdealTypeSideEffect
     data object Loading : IdealTypeSideEffect

@@ -7,7 +7,7 @@ enum class IdealTypePage {
     ;
 
     companion object {
-        fun Int.toIdealTypePager(): IdealTypePage {
+        fun Int.toIdealTypePage(): IdealTypePage {
             when (this) {
                 0 -> return FirstIdealType
                 1 -> return SecondIdealType

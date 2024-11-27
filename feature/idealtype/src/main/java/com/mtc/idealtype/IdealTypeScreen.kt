@@ -26,7 +26,7 @@ import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray03
 import com.mtc.designsystem.theme.MainCoral
-import com.mtc.idealtype.IdealTypePage.Companion.toIdealTypePager
+import com.mtc.idealtype.IdealTypePage.Companion.toIdealTypePage
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -36,7 +36,8 @@ import kotlinx.coroutines.launch
 fun IdealTypeRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateAddMatching: (String, String, String, String, String, List<String>) -> Unit,
+    navigateToBack: () -> Unit,
+    setIdealTypeSavedStateHandle: (String, String, String, String, String, List<String>) -> Unit,
     viewModel: IdealTypeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -51,17 +52,21 @@ fun IdealTypeRoute(
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
+                IdealTypeSideEffect.Back -> navigateToBack()
                 IdealTypeSideEffect.Empty -> {}
                 IdealTypeSideEffect.Error -> {}
                 IdealTypeSideEffect.Loading -> {}
-                IdealTypeSideEffect.Success -> navigateAddMatching(
-                    uiState.minAge,
-                    uiState.maxAge,
-                    uiState.minHeight,
-                    uiState.maxHeight,
-                    uiState.mbti,
-                    uiState.appearanceList,
-                )
+                IdealTypeSideEffect.Success -> {
+                    setIdealTypeSavedStateHandle(
+                        uiState.minAge,
+                        uiState.maxAge,
+                        uiState.minHeight,
+                        uiState.maxHeight,
+                        uiState.mbti,
+                        uiState.appearanceList,
+                    )
+                    navigateToBack()
+                }
             }
         }
     }
@@ -110,7 +115,9 @@ fun IdealTypeScreen(
                             }
                         }
                     } else {
-                        null
+                        {
+                            viewModel.updateIdealTypeResultBack()
+                        }
                     },
                 ),
             painter = painterResource(id = R.drawable.ic_back),
@@ -122,7 +129,7 @@ fun IdealTypeScreen(
             userScrollEnabled = false,
             verticalAlignment = Alignment.Top,
         ) { page ->
-            when (page.toIdealTypePager()) {
+            when (page.toIdealTypePage()) {
                 IdealTypePage.Error -> {}
                 IdealTypePage.FirstIdealType -> FirstIdealTypeScreen(
                     uiState = uiState,

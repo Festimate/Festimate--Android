@@ -1,4 +1,4 @@
-package com.mtc.idealtype
+package com.mtc.idealtype.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.mtc.idealtype.IdealTypeRoute
 import com.mtc.navigation.Route
 import kotlinx.serialization.Serializable
 
@@ -16,13 +17,15 @@ fun NavController.navigateIdealType(navOptions: NavOptions) {
 fun NavGraphBuilder.idealTypeNavGraph(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    navigateToAddMatching: (String, String, String, String, String, List<String>) -> Unit,
+    navigateToBack: () -> Unit,
+    setIdealTypeSavedStateHandle: (String, String, String, String, String, List<String>) -> Unit,
 ) {
     composable<IdealType> {
         IdealTypeRoute(
             padding = padding,
             modifier = modifier,
-            navigateAddMatching = navigateToAddMatching,
+            navigateToBack = navigateToBack,
+            setIdealTypeSavedStateHandle = setIdealTypeSavedStateHandle,
         )
     }
 }

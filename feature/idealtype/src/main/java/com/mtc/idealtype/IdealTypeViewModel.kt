@@ -219,4 +219,10 @@ class IdealTypeViewModel @Inject constructor() : BaseViewModel<IdealTypeState, I
             IdealTypeSideEffect.Success,
         )
     }
+
+    fun updateIdealTypeResultBack() {
+        postSideEffect(
+            IdealTypeSideEffect.Back,
+        )
+    }
 }
