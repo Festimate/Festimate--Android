@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,10 +12,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,16 +29,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mtc.datetaste.DateTastePage.Companion.toDateTastePage
 import com.mtc.designsystem.R
 import com.mtc.designsystem.component.FestimateBasicButton
 import com.mtc.designsystem.theme.FestimateTheme
 import com.mtc.designsystem.theme.Gray01
 import com.mtc.designsystem.theme.Gray03
 import com.mtc.designsystem.theme.Gray06
+import com.mtc.designsystem.theme.MainCoral
+import com.mtc.designsystem.theme.White
 import com.mtc.ui.extension.customClickable
 import com.mtc.ui.lifecycle.LaunchedEffectWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -111,7 +117,8 @@ fun DateTasteScreen(
     }
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
     ) {
         Image(
@@ -135,7 +142,10 @@ fun DateTasteScreen(
             contentDescription = "back",
         )
 
-        Box(modifier = Modifier.padding(bottom = 33.dp)) {
+        Box(
+            modifier = Modifier
+                .padding(bottom = 33.dp),
+        ) {
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -149,20 +159,83 @@ fun DateTasteScreen(
                 color = Gray06,
             )
         }
+        Box(
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 7.dp)
+                .background(
+                    color = MainCoral,
+                    shape = CircleShape,
+                )
+                .size(30.dp)
+                .align(Alignment.CenterHorizontally),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = (pagerState.currentPage + 1).toString(),
+                style = FestimateTheme.typography.bodyBold15,
+                color = White,
+                textAlign = TextAlign.Center,
+            )
+        }
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(
+                    bottom = when (pagerState.currentPage) {
+                        0, 2, 4 -> 91.dp
+                        1, 3 -> 44.dp
+                        else -> 0.dp
+                    },
+                )
+                .fillMaxWidth(),
+            text = when (pagerState.currentPage) {
+                0 -> "이성친구와 단둘이 만나도 될까요?"
+                1 -> "얼마나 자주 데이트를 했으면 하나요?"
+                2 -> "얼마나 자주 연락했으면 하나요?"
+                3 -> "종교는 얼마나 중요한가요?"
+                4 -> "맛집 웨이팅이 1시간 이상이라면?"
+                else -> ""
+            },
+            style = FestimateTheme.typography.titleBold20,
+            color = Gray06,
+        )
         HorizontalPager(
             modifier = Modifier.weight(1f),
             state = pagerState,
-            userScrollEnabled = true,
+            userScrollEnabled = false,
             verticalAlignment = Alignment.Top,
         ) { page ->
-            when (page.toDateTastePage()) {
-                DateTastePage.Error -> {}
-                DateTastePage.FirstDateTaste -> FirstDateTasteScreen()
-                DateTastePage.SecondDateTaste -> SecondDateTasteScreen()
-                DateTastePage.ThirdDateTaste -> ThirdDateTasteScreen()
-                DateTastePage.FourthDateTaste -> FourthDateTasteScreen()
-                DateTastePage.FifthDateTaste -> FifthDateTasteScreen()
-            }
+            DateTasteDetailScreen(
+                uiState = uiState,
+                pagerState = pagerState,
+                firstText = when (pagerState.currentPage) {
+                    0 -> "OK ~ 난 쿨하니까 허락해요!"
+                    1 -> "주 1 ~ 2회"
+                    2 -> "연인이라면 사소한 일상도 공유 필수!"
+                    3 -> "저는 종교가 없어서 안중요해요"
+                    4 -> "너무 길어요 ㅠ 다른 식당 가요"
+                    else -> ""
+                },
+                secondText = when (pagerState.currentPage) {
+                    0 -> "No! 단 둘이 만나는 건 자제해요!"
+                    1 -> "주 3 ~ 4회"
+                    2 -> "여유로울 때만 연락해도 괜찮아요~"
+                    3 -> "저는 매주 종교생활을 해야해요"
+                    4 -> "그래도 기다려서 먹어보고 싶어요!"
+                    else -> ""
+                },
+                thirdText = when (pagerState.currentPage) {
+                    0 -> ""
+                    1 -> "주 5회 이상"
+                    2 -> ""
+                    3 -> "상관없이 모두 존중해요"
+                    4 -> ""
+                    else -> ""
+                },
+                onButtonClick = {},
+            )
         }
         FestimateBasicButton(
             Modifier
