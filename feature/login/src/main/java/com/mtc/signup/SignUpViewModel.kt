@@ -1,6 +1,7 @@
 package com.mtc.signup
 
 import androidx.lifecycle.viewModelScope
+import com.mtc.datastore.datastore.SecurityDataStore
 import com.mtc.domain.repository.FestimateRepository
 import com.mtc.exception.NicknameValidationError
 import com.mtc.model.Appearance
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
+    private val dataStore: SecurityDataStore,
     private val festimateRepository: FestimateRepository,
 ) : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState()) {
 
@@ -300,6 +302,20 @@ class SignUpViewModel @Inject constructor(
                     appearanceList = uiState.value.apperanceList,
                 ),
             ).onSuccess {
+                saveUserId(it)
+            }.onFailure {
+                postSideEffect(
+                    SignUpSideEffect.Error,
+                )
+            }
+        }
+    }
+
+    private fun saveUserId(userId: Long) {
+        viewModelScope.launch {
+            runCatching {
+                dataStore.setUserId(userId)
+            }.onSuccess {
                 postSideEffect(
                     SignUpSideEffect.Success,
                 )
