@@ -142,6 +142,7 @@ fun AddMatchingScreen(
 
                     AddMatchingPage.SecondAddMatching -> SecondAddMatchingScreen(
                         uiState = uiState,
+                        updatePossibleTime = viewModel::updatePossibleTime,
                     )
 
                     AddMatchingPage.ThirdAddMatching -> ThirdAddMatchingScreen(
@@ -168,14 +169,14 @@ fun AddMatchingScreen(
                 textStyle = FestimateTheme.typography.bodySemibold17,
                 clickable = when (pagerState.currentPage) {
                     0 -> uiState.idealTypeResult && uiState.dateTasteResult
-                    1 -> true
+                    1 -> uiState.timeList.isNotEmpty()
                     2 -> true
                     3 -> true
                     else -> false
                 },
                 backgroundColor = when (pagerState.currentPage) {
                     0 -> if (uiState.idealTypeResult && uiState.dateTasteResult) MainCoral else Gray03
-                    1 -> Gray03
+                    1 -> if (uiState.timeList.isNotEmpty()) MainCoral else Gray03
                     2 -> Gray03
                     3 -> Gray03
                     else -> Gray03

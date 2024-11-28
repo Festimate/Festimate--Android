@@ -63,6 +63,18 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
         }
     }
 
+    fun updatePossibleTime(time: String) {
+        intent {
+            copy(
+                timeList = if (uiState.value.timeList.contains(time)) {
+                    uiState.value.timeList - time
+                } else {
+                    uiState.value.timeList + time
+                },
+            )
+        }
+    }
+
     fun addNewMatching() {
         postSideEffect(
             AddMatchingSideEffect.Success,
