@@ -60,6 +60,12 @@ class FestimateRepositoryImpl @Inject constructor(
         throw ApiError(exception.message.toString())
     }
 
-    override suspend fun postRegisterMatching(userId: Long, registerMatching: RegisterMatching): Long =
-        festimateApi.postRegisterMatching(userId, registerMatching.toDto()).toModel()
+    override suspend fun postRegisterMatching(userId: Long, registerMatching: RegisterMatching): Result<Long> = runCatching {
+        festimateApi.postRegisterMatching(userId, registerMatching.toDto())
+    }.mapCatching {
+        it.toModel()
+    }.recoverCatching { exception ->
+        throw ApiError(exception.message.toString())
+    }
 }
+

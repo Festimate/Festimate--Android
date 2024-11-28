@@ -108,7 +108,7 @@ fun InputClothBox(
             )
             FestimateBasicTextField(
                 modifier = Modifier.padding(vertical = 29.dp, horizontal = 16.dp),
-                value = uiState.cloth,
+                value = uiState.dress,
                 onValueChange = { updateCloth(it) },
                 shape = RoundedCornerShape(12.dp),
                 placeholder = "ex) 저는 회색 가디건에 청치마를 입고 있어요!",
@@ -120,7 +120,7 @@ fun InputClothBox(
         }
         Text(
             modifier = Modifier.align(Alignment.End),
-            text = "${uiState.cloth.length}/50",
+            text = "${uiState.dress.length}/50",
             style = FestimateTheme.typography.bodyMedium13,
             color = Gray04,
         )

@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.mtc.addmatching"
 }
+
+dependencies {
+    implementation(projects.core.datastore)
+}

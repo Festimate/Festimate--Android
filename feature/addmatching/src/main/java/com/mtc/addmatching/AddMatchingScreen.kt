@@ -171,7 +171,7 @@ fun AddMatchingScreen(
                 text = when (pagerState.currentPage) {
                     0 -> "매칭하러 가기"
                     1 -> "다음"
-                    2 -> if (uiState.cloth.isNotBlank()) "완료" else "다음"
+                    2 -> if (uiState.dress.isNotBlank()) "완료" else "다음"
                     3 -> "홈 화면으로 돌아가기"
                     else -> ""
                 },
@@ -179,14 +179,14 @@ fun AddMatchingScreen(
                 clickable = when (pagerState.currentPage) {
                     0 -> uiState.idealTypeResult && uiState.dateTasteResult
                     1 -> uiState.timeList.isNotEmpty()
-                    2 -> uiState.cloth.isNotBlank()
+                    2 -> uiState.dress.isNotBlank()
                     3 -> true
                     else -> false
                 },
                 backgroundColor = when (pagerState.currentPage) {
                     0 -> if (uiState.idealTypeResult && uiState.dateTasteResult) MainCoral else Gray03
                     1 -> if (uiState.timeList.isNotEmpty()) MainCoral else Gray03
-                    2 -> if (uiState.cloth.isNotBlank()) MainCoral else Gray03
+                    2 -> if (uiState.dress.isNotBlank()) MainCoral else Gray03
                     3 -> MainCoral
                     else -> Gray03
                 },
