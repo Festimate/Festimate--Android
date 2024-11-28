@@ -9,6 +9,6 @@ interface FestimateRepository {
     suspend fun postCheckNickname(nickname: String): Result<Unit>
     suspend fun postSignUp(signUp: SignUp): Result<Long>
     suspend fun getUserDetail(userId: Long): Result<UserDetail>
-    suspend fun getMatchingList(userId: Long): List<MatchingInfo>
+    suspend fun getMatchingList(userId: Long): Result<List<MatchingInfo>>
     suspend fun postRegisterMatching(userId: Long, registerMatching: RegisterMatching): Long
 }

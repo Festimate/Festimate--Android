@@ -41,7 +41,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getMatchingList() {
-        val list1: List<MatchingInfo> = emptyList()
         val list2 = listOf(
             MatchingInfo(
                 matchingId = 1,
@@ -78,11 +77,24 @@ class HomeViewModel @Inject constructor(
                 dress = "ㅎㅎㅎㅎ",
             ),
         )
-        intent {
-            copy(
-                matchingStateResult = MatchingStateResult.Success,
-                matchingInfo = list2,
-            )
+        viewModelScope.launch {
+            festimateRepository.getMatchingList(dataStore.flowUserId().first())
+                .onSuccess {
+                    intent {
+                        copy(
+                            matchingStateResult = MatchingStateResult.Success,
+                            matchingInfo = it,
+                        )
+                    }
+                }.onFailure {
+                    intent {
+                        copy(
+                            matchingStateResult = MatchingStateResult.Success,
+                            matchingInfo = list2,
+                            //더미데이터 나중에 수정(지금 빈 리스트날아와서 - 나중에 Empty, list2지워야됨
+                            )
+                    }
+                }
         }
     }
 
