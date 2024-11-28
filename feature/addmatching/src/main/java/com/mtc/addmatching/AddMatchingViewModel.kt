@@ -63,6 +63,35 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
         }
     }
 
+    fun updatePossibleTime(time: String) {
+        intent {
+            copy(
+                timeList = if (uiState.value.timeList.contains(time)) {
+                    uiState.value.timeList - time
+                } else {
+                    uiState.value.timeList + time
+                },
+            )
+        }
+    }
+
+    fun updateCloth(cloth: String) {
+        intent {
+            copy(
+                cloth = cloth,
+            )
+        }
+    }
+
+    fun getAccount() {
+        intent {
+            copy(
+                bankName = "카카오뱅크",
+                bankAccount = "3333-18-1234567",
+            )
+        }
+    }
+
     fun addNewMatching() {
         postSideEffect(
             AddMatchingSideEffect.Success,

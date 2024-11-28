@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,6 +51,7 @@ fun AddMatchingRoute(
     LaunchedEffect(Unit) {
         viewModel.updateIdealTypeInfo(getIdealTypeSavedStateHandle())
         viewModel.updateDateTasteInfo(getDateTasteSavedStateHandle())
+        viewModel.getAccount()
     }
 
     LaunchedEffectWithLifecycle {
@@ -81,10 +83,10 @@ fun AddMatchingScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 4 })
 
-    BackHandler(enabled = pagerState.currentPage == 1 || pagerState.currentPage == 2 || pagerState.currentPage == 3) {
+    BackHandler(enabled = pagerState.currentPage == 1 || pagerState.currentPage == 2) {
         coroutineScope.launch {
             when (pagerState.currentPage) {
-                1, 2, 3 -> pagerState.animateScrollToPage(
+                1, 2 -> pagerState.animateScrollToPage(
                     pagerState.currentPage - 1,
                 )
             }
@@ -109,14 +111,19 @@ fun AddMatchingScreen(
                     .align(Alignment.Start)
                     .padding(top = 50.dp)
                     .padding(horizontal = 16.dp)
+                    .alpha(
+                        if (pagerState.currentPage == 3) 0f else 1f,
+                    )
                     .customClickable(
                         rippleEnabled = false,
-                        onClick = if (pagerState.currentPage == 1 || pagerState.currentPage == 2 || pagerState.currentPage == 3) {
+                        onClick = if (pagerState.currentPage == 1 || pagerState.currentPage == 2) {
                             {
                                 coroutineScope.launch {
                                     pagerState.animateScrollToPage(pagerState.currentPage - 1)
                                 }
                             }
+                        } else if (pagerState.currentPage == 3) {
+                            null
                         } else {
                             {
                                 viewModel.updateAddMatchingResultBack()
@@ -129,7 +136,7 @@ fun AddMatchingScreen(
             HorizontalPager(
                 modifier = Modifier.weight(1f),
                 state = pagerState,
-                userScrollEnabled = true,
+                userScrollEnabled = false,
                 verticalAlignment = Alignment.Top,
             ) { page ->
                 when (page.toAddMatching()) {
@@ -142,10 +149,12 @@ fun AddMatchingScreen(
 
                     AddMatchingPage.SecondAddMatching -> SecondAddMatchingScreen(
                         uiState = uiState,
+                        updatePossibleTime = viewModel::updatePossibleTime,
                     )
 
                     AddMatchingPage.ThirdAddMatching -> ThirdAddMatchingScreen(
                         uiState = uiState,
+                        updateCloth = viewModel::updateCloth,
                     )
 
                     AddMatchingPage.FourthAddMatching -> FourthAddMatchingScreen(
@@ -161,23 +170,24 @@ fun AddMatchingScreen(
                 shape = RoundedCornerShape(10.dp),
                 text = when (pagerState.currentPage) {
                     0 -> "매칭하러 가기"
-                    1, 2 -> "다음"
+                    1 -> "다음"
+                    2 -> if (uiState.cloth.isNotBlank()) "완료" else "다음"
                     3 -> "홈 화면으로 돌아가기"
                     else -> ""
                 },
                 textStyle = FestimateTheme.typography.bodySemibold17,
                 clickable = when (pagerState.currentPage) {
                     0 -> uiState.idealTypeResult && uiState.dateTasteResult
-                    1 -> true
-                    2 -> true
+                    1 -> uiState.timeList.isNotEmpty()
+                    2 -> uiState.cloth.isNotBlank()
                     3 -> true
                     else -> false
                 },
                 backgroundColor = when (pagerState.currentPage) {
                     0 -> if (uiState.idealTypeResult && uiState.dateTasteResult) MainCoral else Gray03
-                    1 -> Gray03
-                    2 -> Gray03
-                    3 -> Gray03
+                    1 -> if (uiState.timeList.isNotEmpty()) MainCoral else Gray03
+                    2 -> if (uiState.cloth.isNotBlank()) MainCoral else Gray03
+                    3 -> MainCoral
                     else -> Gray03
                 },
                 onClick = {
@@ -189,7 +199,7 @@ fun AddMatchingScreen(
                         viewModel.addNewMatching()
                     }
                 },
-                padding = PaddingValues(horizontal = 126.dp, vertical = 17.dp),
+                padding = PaddingValues(horizontal = 102.dp, vertical = 17.dp),
             )
         }
     }
