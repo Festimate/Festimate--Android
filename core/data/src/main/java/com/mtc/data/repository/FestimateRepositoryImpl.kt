@@ -39,11 +39,16 @@ class FestimateRepositoryImpl @Inject constructor(
     }.mapCatching {
         it.toModel()
     }.recoverCatching { exception ->
-        throw ApiError("exception")
+        throw ApiError(exception.message.toString())
     }
 
-    override suspend fun getUserDetail(userId: Long): UserDetail =
-        festimateApi.getUserDetail(userId).toModel()
+    override suspend fun getUserDetail(userId: Long): Result<UserDetail> = runCatching {
+        festimateApi.getUserDetail(userId)
+    }.mapCatching {
+        it.toModel()
+    }.recoverCatching { exception ->
+        throw ApiError(exception.message.toString())
+    }
 
     override suspend fun getMatchingList(userId: Long): List<MatchingInfo> =
         festimateApi.getMatchingList(userId).map {

@@ -50,6 +50,7 @@ fun HomeRoute(
     LaunchedEffectWithLifecycle {
         viewModel.sideEffect.collectLatest { sideEffect ->
             when (sideEffect) {
+                HomeSideEffect.Error -> {}
                 HomeSideEffect.Empty -> {}
                 HomeSideEffect.Loading -> {}
                 HomeSideEffect.Success -> navigateAddMatching()

@@ -6,6 +6,7 @@ import com.mtc.domain.repository.FestimateRepository
 import com.mtc.model.MatchingInfo
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,17 +18,25 @@ class HomeViewModel @Inject constructor(
 
     fun setAutoSignIn() {
         viewModelScope.launch {
-            dataStore.setExistAccount(false)
-                //자동로그인 true로 바꿔야됨
+            dataStore.setExistAccount(true)
         }
     }
 
     fun getUserInfo() {
-        intent {
-            copy(
-                userNickname = "이석찬",
-                userSchool = "가톨릭대학교",
-            )
+        viewModelScope.launch {
+            festimateRepository.getUserDetail(dataStore.flowUserId().first())
+                .onSuccess {
+                    intent {
+                        copy(
+                            userNickname = it.nickname,
+                            userSchool = it.school,
+                        )
+                    }
+                }.onFailure {
+                    postSideEffect(
+                        HomeSideEffect.Error,
+                    )
+                }
         }
     }
 
