@@ -25,7 +25,7 @@ internal class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = Home
+    val startDestination = Login
     // login으로 돌리기
 
     fun navigateToLogin() {

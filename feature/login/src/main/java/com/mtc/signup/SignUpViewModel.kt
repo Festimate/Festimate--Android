@@ -1,6 +1,8 @@
 package com.mtc.signup
 
-import android.util.Log
+import androidx.lifecycle.viewModelScope
+import com.mtc.domain.repository.FestimateRepository
+import com.mtc.exception.NicknameValidationError
 import com.mtc.model.Appearance
 import com.mtc.model.Appearance.Companion.toModel
 import com.mtc.model.Mbti
@@ -8,10 +10,13 @@ import com.mtc.model.Mbti.Companion.toModel
 import com.mtc.model.NicknameValidateResult
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState()) {
+class SignUpViewModel @Inject constructor(
+    private val festimateRepository: FestimateRepository,
+) : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState()) {
 
     fun updateName(name: String) {
         intent {
@@ -32,14 +37,35 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
     }
 
     fun checkNickNameDuplicate() {
-        if (uiState.value.nickname != "아아") {
-            intent {
-                Log.d("asdasd", "not duplicate")
-                copy(
-                    nicknameValidateResult = NicknameValidateResult.Success,
-                )
-            }
+        viewModelScope.launch {
+            festimateRepository.postCheckNickname(uiState.value.nickname)
+                .onSuccess {
+                    intent {
+                        copy(
+                            nicknameValidateResult = NicknameValidateResult.Success,
+                        )
+                    }
+                }.onFailure { exception ->
+                    when (exception) {
+                        is NicknameValidationError -> {
+                            intent {
+                                copy(
+                                    nicknameValidateResult = NicknameValidateResult.Duplicate,
+                                )
+                            }
+                        }
+
+                        else -> {
+                            intent {
+                                copy(
+                                    nicknameValidateResult = NicknameValidateResult.Error,
+                                )
+                            }
+                        }
+                    }
+                }
         }
+
     }
 
     fun updateAge(age: String) {

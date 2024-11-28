@@ -17,7 +17,8 @@ class HomeViewModel @Inject constructor(
 
     fun setAutoSignIn() {
         viewModelScope.launch {
-            dataStore.setExistAccount(true)
+            dataStore.setExistAccount(false)
+                //자동로그인 true로 바꿔야됨
         }
     }
 

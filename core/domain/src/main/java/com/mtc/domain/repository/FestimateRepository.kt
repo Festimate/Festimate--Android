@@ -6,7 +6,7 @@ import com.mtc.model.SignUp
 import com.mtc.model.UserDetail
 
 interface FestimateRepository {
-    suspend fun postCheckNickname(nickname: String)
+    suspend fun postCheckNickname(nickname: String): Result<Unit>
     suspend fun postSignUp(signUp: SignUp): Long
     suspend fun getUserDetail(userId: Long): UserDetail
     suspend fun getMatchingList(userId: Long): List<MatchingInfo>

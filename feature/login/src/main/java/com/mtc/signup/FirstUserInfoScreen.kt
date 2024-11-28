@@ -154,8 +154,8 @@ fun FirstUserInfoScreen(
                 shape = RoundedCornerShape(10.dp),
                 text = "중복확인",
                 textStyle = FestimateTheme.typography.bodySemibold13,
-                clickable = uiState.nicknameValidateResult == NicknameValidateResult.CorrectInput,
-                backgroundColor = if (uiState.nicknameValidateResult == NicknameValidateResult.CorrectInput
+                clickable = uiState.nicknameValidateResult == NicknameValidateResult.CorrectInput || uiState.nicknameValidateResult == NicknameValidateResult.Duplicate,
+                backgroundColor = if (uiState.nicknameValidateResult == NicknameValidateResult.CorrectInput || uiState.nicknameValidateResult == NicknameValidateResult.Duplicate
                 ) {
                     MainCoral
                 } else {
