@@ -75,6 +75,14 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
         }
     }
 
+    fun updateCloth(cloth: String) {
+        intent {
+            copy(
+                cloth = cloth,
+            )
+        }
+    }
+
     fun addNewMatching() {
         postSideEffect(
             AddMatchingSideEffect.Success,

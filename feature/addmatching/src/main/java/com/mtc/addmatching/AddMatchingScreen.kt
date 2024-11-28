@@ -129,7 +129,7 @@ fun AddMatchingScreen(
             HorizontalPager(
                 modifier = Modifier.weight(1f),
                 state = pagerState,
-                userScrollEnabled = true,
+                userScrollEnabled = false,
                 verticalAlignment = Alignment.Top,
             ) { page ->
                 when (page.toAddMatching()) {
@@ -147,6 +147,7 @@ fun AddMatchingScreen(
 
                     AddMatchingPage.ThirdAddMatching -> ThirdAddMatchingScreen(
                         uiState = uiState,
+                        updateCloth = viewModel::updateCloth,
                     )
 
                     AddMatchingPage.FourthAddMatching -> FourthAddMatchingScreen(
@@ -162,22 +163,24 @@ fun AddMatchingScreen(
                 shape = RoundedCornerShape(10.dp),
                 text = when (pagerState.currentPage) {
                     0 -> "매칭하러 가기"
-                    1, 2 -> "다음"
+                    1 -> "다음"
+                    2 -> if (uiState.cloth.isNotBlank()) "완료" else "다음"
                     3 -> "홈 화면으로 돌아가기"
                     else -> ""
                 },
                 textStyle = FestimateTheme.typography.bodySemibold17,
                 clickable = when (pagerState.currentPage) {
-                    0 -> uiState.idealTypeResult && uiState.dateTasteResult
+                    0 -> true
+                    // uiState.idealTypeResult && uiState.dateTasteResult
                     1 -> uiState.timeList.isNotEmpty()
-                    2 -> true
+                    2 -> uiState.cloth.isNotBlank()
                     3 -> true
                     else -> false
                 },
                 backgroundColor = when (pagerState.currentPage) {
                     0 -> if (uiState.idealTypeResult && uiState.dateTasteResult) MainCoral else Gray03
                     1 -> if (uiState.timeList.isNotEmpty()) MainCoral else Gray03
-                    2 -> Gray03
+                    2 -> if (uiState.cloth.isNotBlank()) MainCoral else Gray03
                     3 -> Gray03
                     else -> Gray03
                 },

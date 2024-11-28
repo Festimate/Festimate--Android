@@ -12,7 +12,7 @@ data class AddMatchingState(
     val appearanceList: List<String> = emptyList(),
     val questionList: List<Int> = emptyList(),
     val timeList: List<String> = emptyList(),
-    val dress: String = "",
+    val cloth: String = "",
     val idealTypeResult: Boolean = false,
     val dateTasteResult: Boolean = false,
     val secondAddMatchingScreenResult: Boolean = false,
