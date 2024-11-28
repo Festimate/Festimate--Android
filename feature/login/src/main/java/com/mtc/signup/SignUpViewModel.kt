@@ -8,6 +8,7 @@ import com.mtc.model.Appearance.Companion.toModel
 import com.mtc.model.Mbti
 import com.mtc.model.Mbti.Companion.toModel
 import com.mtc.model.NicknameValidateResult
+import com.mtc.model.SignUp
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -268,6 +269,11 @@ class SignUpViewModel @Inject constructor(
         if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true) {
             intent {
                 copy(
+                    apperanceList = buildList {
+                        add(uiState.value.firstAppearance.toModel().toString())
+                        if (uiState.value.secondAppearance != Appearance.Empty)
+                            add(uiState.value.secondAppearance.toModel().toString())
+                    },
                     thirdUserInfoScreenResult = true,
                 )
             }
@@ -281,9 +287,28 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun signUp() {
-        postSideEffect(
-            SignUpSideEffect.Success,
-        )
+        viewModelScope.launch {
+            festimateRepository.postSignUp(
+                SignUp(
+                    username = uiState.value.username,
+                    nickname = uiState.value.nickname,
+                    age = uiState.value.age.toInt(),
+                    gender = uiState.value.selectedGender.toDto(),
+                    school = uiState.value.school,
+                    height = uiState.value.height.toInt(),
+                    mbti = uiState.value.mbti,
+                    appearanceList = uiState.value.apperanceList,
+                ),
+            ).onSuccess {
+                postSideEffect(
+                    SignUpSideEffect.Success,
+                )
+            }.onFailure {
+                postSideEffect(
+                    SignUpSideEffect.Error,
+                )
+            }
+        }
     }
 
     private fun checkNicknameValidate(nickname: String): NicknameValidateResult {

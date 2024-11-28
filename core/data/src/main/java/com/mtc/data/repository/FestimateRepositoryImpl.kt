@@ -34,8 +34,13 @@ class FestimateRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun postSignUp(signUp: SignUp): Long =
-        festimateApi.postSignUp(signUp.toDto()).toModel()
+    override suspend fun postSignUp(signUp: SignUp): Result<Long> = runCatching {
+        festimateApi.postSignUp(signUp.toDto())
+    }.mapCatching {
+        it.toModel()
+    }.recoverCatching { exception ->
+        throw ApiError("exception")
+    }
 
     override suspend fun getUserDetail(userId: Long): UserDetail =
         festimateApi.getUserDetail(userId).toModel()
