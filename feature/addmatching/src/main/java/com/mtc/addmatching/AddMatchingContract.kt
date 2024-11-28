@@ -18,6 +18,8 @@ data class AddMatchingState(
     val secondAddMatchingScreenResult: Boolean = false,
     val thirdAddMatchingScreenResult: Boolean = false,
     val fourthAddMatchingScreenResult: Boolean = false,
+    val bankName: String = "",
+    val bankAccount: String = "",
 ) : UiState
 
 sealed interface AddMatchingSideEffect : SideEffect {

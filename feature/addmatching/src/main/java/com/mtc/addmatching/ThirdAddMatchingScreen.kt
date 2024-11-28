@@ -125,5 +125,4 @@ fun InputClothBox(
             color = Gray04,
         )
     }
-
 }

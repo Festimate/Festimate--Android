@@ -83,6 +83,15 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
         }
     }
 
+    fun getAccount() {
+        intent {
+            copy(
+                bankName = "카카오뱅크",
+                bankAccount = "3333-18-1234567",
+            )
+        }
+    }
+
     fun addNewMatching() {
         postSideEffect(
             AddMatchingSideEffect.Success,
