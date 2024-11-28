@@ -6,6 +6,7 @@ import com.mtc.domain.repository.FestimateRepository
 import com.mtc.model.MatchingInfo
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,16 +23,24 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getUserInfo() {
-        intent {
-            copy(
-                userNickname = "이석찬",
-                userSchool = "가톨릭대학교",
-            )
+        viewModelScope.launch {
+            festimateRepository.getUserDetail(dataStore.flowUserId().first())
+                .onSuccess {
+                    intent {
+                        copy(
+                            userNickname = it.nickname,
+                            userSchool = it.school,
+                        )
+                    }
+                }.onFailure {
+                    postSideEffect(
+                        HomeSideEffect.Error,
+                    )
+                }
         }
     }
 
     fun getMatchingList() {
-        val list1: List<MatchingInfo> = emptyList()
         val list2 = listOf(
             MatchingInfo(
                 matchingId = 1,
@@ -68,11 +77,24 @@ class HomeViewModel @Inject constructor(
                 dress = "ㅎㅎㅎㅎ",
             ),
         )
-        intent {
-            copy(
-                matchingStateResult = MatchingStateResult.Success,
-                matchingInfo = list2,
-            )
+        viewModelScope.launch {
+            festimateRepository.getMatchingList(dataStore.flowUserId().first())
+                .onSuccess {
+                    intent {
+                        copy(
+                            matchingStateResult = MatchingStateResult.Success,
+                            matchingInfo = it,
+                        )
+                    }
+                }.onFailure {
+                    intent {
+                        copy(
+                            matchingStateResult = MatchingStateResult.Success,
+                            matchingInfo = list2,
+                            // 더미데이터 나중에 수정(지금 빈 리스트날아와서 - 나중에 Empty, list2지워야됨
+                        )
+                    }
+                }
         }
     }
 

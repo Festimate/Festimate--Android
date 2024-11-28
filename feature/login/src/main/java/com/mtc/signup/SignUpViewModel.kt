@@ -1,17 +1,25 @@
 package com.mtc.signup
 
-import android.util.Log
+import androidx.lifecycle.viewModelScope
+import com.mtc.datastore.datastore.SecurityDataStore
+import com.mtc.domain.repository.FestimateRepository
+import com.mtc.exception.NicknameValidationError
 import com.mtc.model.Appearance
 import com.mtc.model.Appearance.Companion.toModel
 import com.mtc.model.Mbti
 import com.mtc.model.Mbti.Companion.toModel
 import com.mtc.model.NicknameValidateResult
+import com.mtc.model.SignUp
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState()) {
+class SignUpViewModel @Inject constructor(
+    private val dataStore: SecurityDataStore,
+    private val festimateRepository: FestimateRepository,
+) : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState()) {
 
     fun updateName(name: String) {
         intent {
@@ -32,13 +40,33 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
     }
 
     fun checkNickNameDuplicate() {
-        if (uiState.value.nickname != "아아") {
-            intent {
-                Log.d("asdasd", "not duplicate")
-                copy(
-                    nicknameValidateResult = NicknameValidateResult.Success,
-                )
-            }
+        viewModelScope.launch {
+            festimateRepository.postCheckNickname(uiState.value.nickname)
+                .onSuccess {
+                    intent {
+                        copy(
+                            nicknameValidateResult = NicknameValidateResult.Success,
+                        )
+                    }
+                }.onFailure { exception ->
+                    when (exception) {
+                        is NicknameValidationError -> {
+                            intent {
+                                copy(
+                                    nicknameValidateResult = NicknameValidateResult.Duplicate,
+                                )
+                            }
+                        }
+
+                        else -> {
+                            intent {
+                                copy(
+                                    nicknameValidateResult = NicknameValidateResult.Error,
+                                )
+                            }
+                        }
+                    }
+                }
         }
     }
 
@@ -242,6 +270,12 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
         if (uiState.value.firstAppearance.toModel()?.isNotBlank() == true) {
             intent {
                 copy(
+                    apperanceList = buildList {
+                        add(uiState.value.firstAppearance.toModel().toString())
+                        if (uiState.value.secondAppearance != Appearance.Empty) {
+                            add(uiState.value.secondAppearance.toModel().toString())
+                        }
+                    },
                     thirdUserInfoScreenResult = true,
                 )
             }
@@ -255,9 +289,42 @@ class SignUpViewModel @Inject constructor() : BaseViewModel<SignUpState, SignUpS
     }
 
     fun signUp() {
-        postSideEffect(
-            SignUpSideEffect.Success,
-        )
+        viewModelScope.launch {
+            festimateRepository.postSignUp(
+                SignUp(
+                    username = uiState.value.username,
+                    nickname = uiState.value.nickname,
+                    age = uiState.value.age.toInt(),
+                    gender = uiState.value.selectedGender.toDto(),
+                    school = uiState.value.school,
+                    height = uiState.value.height.toInt(),
+                    mbti = uiState.value.mbti,
+                    appearanceList = uiState.value.apperanceList,
+                ),
+            ).onSuccess {
+                saveUserId(it)
+            }.onFailure {
+                postSideEffect(
+                    SignUpSideEffect.Error,
+                )
+            }
+        }
+    }
+
+    private fun saveUserId(userId: Long) {
+        viewModelScope.launch {
+            runCatching {
+                dataStore.setUserId(userId)
+            }.onSuccess {
+                postSideEffect(
+                    SignUpSideEffect.Success,
+                )
+            }.onFailure {
+                postSideEffect(
+                    SignUpSideEffect.Error,
+                )
+            }
+        }
     }
 
     private fun checkNicknameValidate(nickname: String): NicknameValidateResult {

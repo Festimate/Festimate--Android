@@ -19,6 +19,7 @@ data class HomeState(
 ) : UiState
 
 sealed interface HomeSideEffect : SideEffect {
+    data object Error : HomeSideEffect
     data object Empty : HomeSideEffect
     data object Loading : HomeSideEffect
     data object Success : HomeSideEffect

@@ -14,7 +14,7 @@ import retrofit2.http.Query
 
 interface FestimateApi {
 
-    @POST("festimate/v1/users/check-nickname")
+    @POST("festimate/v1/check-nickname")
     suspend fun postCheckNicknameDuplicate(
         @Query("nickname") nickname: String,
     )

@@ -1,13 +1,22 @@
 package com.mtc.addmatching
 
+import androidx.lifecycle.viewModelScope
+import com.mtc.datastore.datastore.SecurityDataStore
+import com.mtc.domain.repository.FestimateRepository
 import com.mtc.model.IdealTypeInfo
+import com.mtc.model.RegisterMatching
 import com.mtc.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
-class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingState, AddMatchingSideEffect>(AddMatchingState()) {
+class AddMatchingViewModel @Inject constructor(
+    private val dataStore: SecurityDataStore,
+    private val festimateRepository: FestimateRepository,
+) : BaseViewModel<AddMatchingState, AddMatchingSideEffect>(AddMatchingState()) {
 
     fun navigateIdealType() {
         postSideEffect(
@@ -78,7 +87,7 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
     fun updateCloth(cloth: String) {
         intent {
             copy(
-                cloth = cloth,
+                dress = cloth,
             )
         }
     }
@@ -93,9 +102,30 @@ class AddMatchingViewModel @Inject constructor() : BaseViewModel<AddMatchingStat
     }
 
     fun addNewMatching() {
-        postSideEffect(
-            AddMatchingSideEffect.Success,
-        )
+        viewModelScope.launch {
+            festimateRepository.postRegisterMatching(
+                dataStore.flowUserId().first(),
+                RegisterMatching(
+                    minHeight = uiState.value.minHeight.toInt(),
+                    maxHeight = uiState.value.maxHeight.toInt(),
+                    minAge = uiState.value.minAge.toInt(),
+                    maxAge = uiState.value.maxAge.toInt(),
+                    mbti = uiState.value.mbti,
+                    appearanceList = uiState.value.appearanceList,
+                    questionList = uiState.value.questionList,
+                    timeList = uiState.value.timeList,
+                    dress = uiState.value.dress,
+                ),
+            ).onSuccess {
+                postSideEffect(
+                    AddMatchingSideEffect.Success,
+                )
+            }.onFailure {
+                postSideEffect(
+                    AddMatchingSideEffect.Error,
+                )
+            }
+        }
     }
 
     fun updateAddMatchingResultBack() {

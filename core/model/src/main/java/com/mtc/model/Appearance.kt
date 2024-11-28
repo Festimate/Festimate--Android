@@ -30,14 +30,14 @@ enum class Appearance {
         fun Appearance.toModel(): String? {
             return when (this) {
                 Empty -> null
-                Cat -> "cat"
-                Dog -> "dog"
-                Dinosaur -> "dinosaur"
-                Fox -> "fox"
-                Bear -> "bear"
-                Rabbit -> "rabbit"
-                Arab -> "arab"
-                Tofu -> "tofu"
+                Cat -> "고양이상"
+                Dog -> "강아지상"
+                Dinosaur -> "공룡상"
+                Fox -> "여우상"
+                Bear -> "곰상"
+                Rabbit -> "토끼상"
+                Arab -> "아랍상"
+                Tofu -> "두부상"
             }
         }
     }
