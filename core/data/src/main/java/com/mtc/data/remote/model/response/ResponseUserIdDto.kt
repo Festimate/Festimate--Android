@@ -11,4 +11,3 @@ data class ResponseUserIdDto(
 
 fun ResponseUserIdDto.toModel(): Long =
     userId
-

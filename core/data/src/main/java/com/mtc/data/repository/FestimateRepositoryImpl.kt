@@ -20,10 +20,8 @@ class FestimateRepositoryImpl @Inject constructor(
     override suspend fun postSignUp(signUp: SignUp): Long =
         festimateApi.postSignUp(signUp.toDto()).toModel()
 
-
     override suspend fun getUserDetail(userId: Long): UserDetail =
         festimateApi.getUserDetail(userId).toModel()
-
 
     override suspend fun getMatchingList(userId: Long): List<MatchingInfo> =
         festimateApi.getMatchingList(userId).map {

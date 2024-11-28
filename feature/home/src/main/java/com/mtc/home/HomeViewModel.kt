@@ -14,7 +14,7 @@ class HomeViewModel @Inject constructor(
     private val dataStore: SecurityDataStore,
     private val festimateRepository: FestimateRepository,
 ) : BaseViewModel<HomeState, HomeSideEffect>(HomeState()) {
-    
+
     fun setAutoSignIn() {
         viewModelScope.launch {
             dataStore.setExistAccount(true)
