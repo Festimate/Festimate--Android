@@ -91,8 +91,8 @@ class HomeViewModel @Inject constructor(
                         copy(
                             matchingStateResult = MatchingStateResult.Success,
                             matchingInfo = list2,
-                            //더미데이터 나중에 수정(지금 빈 리스트날아와서 - 나중에 Empty, list2지워야됨
-                            )
+                            // 더미데이터 나중에 수정(지금 빈 리스트날아와서 - 나중에 Empty, list2지워야됨
+                        )
                     }
                 }
         }

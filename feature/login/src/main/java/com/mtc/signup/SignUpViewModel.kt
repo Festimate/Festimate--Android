@@ -68,7 +68,6 @@ class SignUpViewModel @Inject constructor(
                     }
                 }
         }
-
     }
 
     fun updateAge(age: String) {
@@ -273,8 +272,9 @@ class SignUpViewModel @Inject constructor(
                 copy(
                     apperanceList = buildList {
                         add(uiState.value.firstAppearance.toModel().toString())
-                        if (uiState.value.secondAppearance != Appearance.Empty)
+                        if (uiState.value.secondAppearance != Appearance.Empty) {
                             add(uiState.value.secondAppearance.toModel().toString())
+                        }
                     },
                     thirdUserInfoScreenResult = true,
                 )
