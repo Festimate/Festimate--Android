@@ -85,13 +85,13 @@ fun MatchingContainer(
                 )
             }
             Spacer(modifier = Modifier.weight(0.05f))
-            MatchingMeetingInfo(icon = R.drawable.ic_university_hat, title = matchingInfo.university)
+            MatchingMeetingInfo(icon = R.drawable.ic_university_hat, title = matchingInfo.school)
             Spacer(modifier = Modifier.weight(0.07f))
             MatchingMeetingSubInfo(firstText = matchingInfo.age, secondText = matchingInfo.mbti)
             Spacer(modifier = Modifier.weight(0.05f))
             MatchingMeetingSubInfo(firstText = matchingInfo.faceFirst, secondText = matchingInfo.faceSecond)
             Spacer(modifier = Modifier.weight(0.05f))
-            MatchingMeetingClothInfo(todayCloth = matchingInfo.todayCloth)
+            MatchingMeetingClothInfo(todayCloth = matchingInfo.dress)
             Spacer(modifier = Modifier.weight(0.18f))
         }
     }
