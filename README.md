@@ -2,6 +2,10 @@
 <img width="2170" alt="ReadMe" src="https://github.com/user-attachments/assets/6f3b3705-8c6d-4b08-9cd9-8cd4fbd82789">
 
 
+# 가톨릭대학교 종합설계프로젝트2
+festimate팀 android
+
+
 # 시연 영상
 <table>
   <tr>
@@ -17,3 +21,27 @@
     <td align="center"><b>홈(매칭성공)</b></td>
   </tr>
 </table>
+
+# 패키지 구조
+```bash
+📦com.mtc.festimate
+├─📂app
+├─📂core
+│ ├─📂buildconfig
+│ ├─📂common
+│ ├─📂data
+│ ├─📂datastore
+│ ├─📂designsystem
+│ ├─📂domain
+│ ├─📂model
+│ ├─📂navigation
+│ ├─📂network
+│ └─📂ui
+└─📂feature
+  ├─📂main
+  ├─📂login
+  ├─📂home
+  ├─📂idealtype
+  ├─📂datetaste
+  └─📂addmatching
+```
